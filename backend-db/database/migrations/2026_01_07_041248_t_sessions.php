@@ -19,7 +19,8 @@ class TSessions extends Migration
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->longText('payload')->nullable();
-            $table->binary('data')->nullable();
+            $table->mediumText('data')->charset('binary');
+            //$table->binary('data')->nullable();
             $table->integer('last_activity')->nullable()->index();
             $table->integer('timestamp')->nullable();
         });

@@ -6,14 +6,20 @@ use Illuminate\Support\Carbon;
 
 //https://notes.enovision.net/codeigniter/eloquent-in-codeigniter/how-to-use-the-models
 
-class Role_Model extends MY_Model
+class Client_Model extends MY_Model
 {
-	protected $table = 't_roles';
+	protected $table = 't_clients';
 
 	protected $fillable = [
-		'rolename',
-		'roledisplay',
-        'guard_name'
+		'client_ruc_uid',
+		'client_email',
+        'client_name',
+		'client_logo',
+		'client_verified_at',
+		'client_display',
+		'status',
+		'client_date_license',
+		'client_weburl'
 	];
 
 	/**
@@ -24,8 +30,9 @@ class Role_Model extends MY_Model
 
     public function users()
     {
-        return $this->belongsToMany(User_model::class, 't_role_user', 'role_id', 'user_id');
+		return $this->hasMany(User_model::class,'client_id','id');
     }
 
-	//protected $with = ['users'];
+	
+    protected $with = ['users'];
 }

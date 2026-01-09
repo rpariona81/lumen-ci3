@@ -32,10 +32,15 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'password',
     ];
 
-    protected $with = ['roles'];
+    protected $with = ['roles','client'];
 
     public function roles()
     {
         return $this->belongsToMany(Role::class, 't_role_user', 'user_id', 'role_id');
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'client_id', 'id');  
     }
 }

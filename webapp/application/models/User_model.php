@@ -37,7 +37,7 @@ class User_Model extends MY_Model
         'id' => 'integer'
     ];
 
-    protected $with = ['roles'];
+    protected $with = ['roles','client'];
 
     public function roles()
     {
@@ -136,6 +136,11 @@ class User_Model extends MY_Model
     public function hasRole($roleName)
     {
         return $this->roles()->where('rolename', $roleName)->exists();
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client_Model::class, 'client_id', 'id');  
     }
 
 }

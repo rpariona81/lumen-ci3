@@ -23,14 +23,25 @@ class Welcome extends CI_Controller
 	{
 		//$this->load->view('welcome_message');
 		$data = array();
+		$this->load->model('Client_model');
 		$this->load->model('Role_model');
 		$this->load->model('User_model');
 
-		
+		/* 
 		$users = $this->User_model::all();
 		$data['users'] = $users;
 		print_r(json_encode($data['users']));
-		
+		 */
+
+		/*
+		$clients = $this->Client_model::all();
+		$data['clients'] = $clients;
+		print_r(json_encode($data['clients']));
+		*/
+
+		$roles = $this->Role_model::all();
+		$data['roles'] = $roles;
+		print_r(json_encode($data['roles']));
 
 		/*
 		$user = $this->User_model::findOrFail(1);
