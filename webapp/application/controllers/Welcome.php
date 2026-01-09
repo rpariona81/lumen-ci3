@@ -1,7 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Welcome extends CI_Controller
+{
 
 	/**
 	 * Index Page for this controller.
@@ -24,9 +25,20 @@ class Welcome extends CI_Controller {
 		$data = array();
 		$this->load->model('Role_model');
 		$this->load->model('User_model');
+
 		
 		$users = $this->User_model::all();
 		$data['users'] = $users;
 		print_r(json_encode($data['users']));
+		
+
+		/*
+		$user = $this->User_model::findOrFail(1);
+		if ($user->hasRole('user')) {
+			echo "El usuario es administrador";
+		} else {
+			echo "El usuario no es administrador";
+		}
+			*/
 	}
 }

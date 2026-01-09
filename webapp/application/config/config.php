@@ -374,7 +374,7 @@ $config['sess_samesite'] = 'Lax';
 $config['sess_expiration'] = 7200;
 $config['sess_save_path'] = 't_sessions';
 $config['sess_match_ip'] = FALSE;
-$config['sess_time_to_update'] = 300;
+$config['sess_time_to_update'] = 3600;
 $config['sess_regenerate_destroy'] = TRUE;
 
 /*
