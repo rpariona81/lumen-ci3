@@ -12,16 +12,16 @@
 	},
 	"require": {
 		"php": "^7.3|^8.1",
-		"illuminate/database": "^8.3.1",
 		"vlucas/phpdotenv": "^5.6",
 		"phpmailer/phpmailer": "^6.7.1",
-		"illuminate/pagination": "^8.3.1",
-		"illuminate/session": "^8.3.1",
-		"illuminate/validation": "^8.3.1",
-		"illuminate/collections": "^8.3.1",
-		"illuminate/auth": "^8.3.1",
-		"illuminate/events": "^8.3.1",
-		"illuminate/container": "^8.3.1"
+		"illuminate/database": "^9.3",
+		"illuminate/pagination": "^9.3",
+		"illuminate/session": "^9.3",
+		"illuminate/validation": "^9.3",
+		"illuminate/collections": "^9.3",
+		"illuminate/auth": "^9.3",
+		"illuminate/events": "^9.3",
+		"illuminate/container": "^9.3"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
@@ -41,5 +41,10 @@
 	"require-dev": {
 		"mikey179/vfsstream": "1.6.*",
 		"phpunit/phpunit": "4.* || 5.* || 9.*"
-	}
+	},
+	"autoload": {
+        "psr-4": {
+            "App\\": "application/"
+        }
+    }
 }

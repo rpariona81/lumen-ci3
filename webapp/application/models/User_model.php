@@ -37,7 +37,7 @@ class User_Model extends MY_Model
         'id' => 'integer'
     ];
 
-    protected $with = ['roles','client'];
+    protected $with = ['roles'];
 
     public function roles()
     {

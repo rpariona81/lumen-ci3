@@ -33,15 +33,16 @@ class Welcome extends CI_Controller
 		print_r(json_encode($data['users']));
 		 */
 
-		/*
-		$clients = $this->Client_model::all();
+		
+		$clients = $this->Client_model::with('users')->get();
 		$data['clients'] = $clients;
 		print_r(json_encode($data['clients']));
-		*/
-
+		
+		/* 
 		$roles = $this->Role_model::all();
 		$data['roles'] = $roles;
 		print_r(json_encode($data['roles']));
+		 */
 
 		/*
 		$user = $this->User_model::findOrFail(1);

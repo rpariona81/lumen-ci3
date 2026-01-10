@@ -80,3 +80,12 @@ Acknowledgement
 
 The CodeIgniter team would like to thank EllisLab, all the
 contributors to the CodeIgniter project and you, the CodeIgniter user.
+
+        "illuminate/database": "^8.3.1",
+		"illuminate/pagination": "^8.3.1",
+		"illuminate/session": "^8.3.1",
+		"illuminate/validation": "^8.3.1",
+		"illuminate/collections": "^8.3.1",
+		"illuminate/auth": "^8.3.1",
+		"illuminate/events": "^8.3.1",
+		"illuminate/container": "^8.3.1"

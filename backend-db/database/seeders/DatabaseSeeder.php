@@ -16,7 +16,17 @@ class DatabaseSeeder extends Seeder
         //$this->call('UsersSeeder');
         //$this->call('RolesSeeder');
 
-        $this->call([ClientsSeeder::class, RolesSeeder::class, UsersSeeder::class]);
-        
+        $this->call(
+            [
+                ClientsSeeder::class,
+                RolesSeeder::class,
+                UsersSeeder::class,
+                CatalogSeeder::class,
+                CareerSeeder::class,
+                OfferClientSeeder::class,
+                EbookSeeder::class
+            ]
+        );
+
     }
 }

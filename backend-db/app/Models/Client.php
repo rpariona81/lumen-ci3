@@ -33,4 +33,11 @@ class Client extends Model
     {
         return $this->hasMany(User::class,'client_id');
     }
+
+    public function ebooks()
+    {
+        return $this->belongsToMany(Ebook::class, 't_client_ebook', 'client_id', 'ebook_id')
+                    ->withPivot('authorized')
+                    ->withTimestamps();
+    }
 }

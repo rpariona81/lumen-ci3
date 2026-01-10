@@ -13,11 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('t_role_user', function (Blueprint $table) {
-            $table->bigIncrements('id'); // role_user id
-            $table->unsignedBigInteger('role_id');       // For MySQL 8.0 use string('name', 125);
-            $table->unsignedBigInteger('user_id'); // For MySQL 8.0 use string('guard_name', 125);
-            $table->unsignedBigInteger('verified')->default(true);
+        Schema::create('t_careers', function (Blueprint $table) {
+            $table->bigIncrements('id'); // id
+            $table->string('career_name');
+            $table->string('career_description');  
+            $table->string('career_code');
+            $table->string('career_alias');
+            $table->string('career_display');
+            $table->string('career_related');
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('t_role_user');
+        Schema::dropIfExists('t_careers');
     }
 };

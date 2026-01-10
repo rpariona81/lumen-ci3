@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
+        Schema::create('t_client_ebook', function (Blueprint $table) {
+            $table->bigIncrements('id'); // client_ebook id
+            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('ebook_id');
+            $table->boolean('authorized')->default(true);
+            $table->timestamps();
         });
     }
 
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('t_client_ebook');
     }
 };

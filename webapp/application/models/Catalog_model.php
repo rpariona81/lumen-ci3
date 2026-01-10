@@ -7,20 +7,15 @@ use PhpParser\Node\Stmt\TryCatch;
 
 //https://notes.enovision.net/codeigniter/eloquent-in-codeigniter/how-to-use-the-models
 
-class Client_Model extends MY_Model
+class Catalog_Model extends MY_Model
 {
-	protected $table = 't_clients';
+	protected $table = 't_catalogs';
 
 	protected $fillable = [
-		'client_ruc_uid',
-		'client_email',
-        'client_name',
-		'client_logo',
-		'client_verified_at',
-		'client_display',
-		'status',
-		'client_date_license',
-		'client_weburl'
+		'catalog_name',
+		'catalog_alias',
+        'catalog_display',
+		'catalog_ico'
 	];
 
 	/**
