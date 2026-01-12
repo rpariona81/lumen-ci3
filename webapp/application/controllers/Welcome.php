@@ -33,24 +33,51 @@ class Welcome extends CI_Controller
 		print_r(json_encode($data['users']));
 		 */
 
-		
+		/*
 		$clients = $this->Client_model::with('users')->get();
 		$data['clients'] = $clients;
 		print_r(json_encode($data['clients']));
-		
+		*/
+
 		/* 
 		$roles = $this->Role_model::all();
 		$data['roles'] = $roles;
 		print_r(json_encode($data['roles']));
 		 */
 
-		/*
+		
 		$user = $this->User_model::findOrFail(1);
 		if ($user->hasRole('user')) {
-			echo "El usuario es administrador";
+			//echo "El usuario es administrador";
+			//print_r(json_encode($user->with('client')->get()));
+			print_r(json_encode($user));
 		} else {
 			echo "El usuario no es administrador";
+			//print_r(json_encode($user));
 		}
-			*/
+		
+	}
+
+	public function testlogin()
+	{
+		session_destroy();
+		$usernameForm = 'guest';
+		$passwordForm = '123456';
+
+		$this->load->library('LoginLib');
+		$this->load->library('session');
+		$user = $this->loginlib->login($usernameForm, $passwordForm);
+		if ($user) {
+			//print_r(json_encode($user));
+			$newdata = array(
+				'User'	=> $user['username'],
+				'Role'	=> $user['roles'][0]->roledisplay,
+				'Client'	=> $user['client']->client_name,
+				'is_logged_in'	=> true);
+			$this->session->set_userdata($newdata);
+			print_r(json_encode($this->session->all_userdata()));
+		} else {
+			echo "Login failed";
+		}
 	}
 }

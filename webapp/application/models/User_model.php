@@ -37,13 +37,23 @@ class User_Model extends MY_Model
         'id' => 'integer'
     ];
 
-    protected $with = ['roles'];
+    //protected $with = ['roles'];
 
     public function roles()
     {
         return $this->belongsToMany(Role_model::class, 't_role_user', 'user_id', 'role_id');
     }
 
+    public function hasRole($roleName)
+    {
+        return $this->roles()->where('rolename', $roleName)->exists();
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client_Model::class, 'client_id', 'id');  
+    }
+    
     protected $appends = ['userflag'];
 
     // Carbon instance fields
@@ -133,14 +143,6 @@ class User_Model extends MY_Model
         return $model_count;
     }
 
-    public function hasRole($roleName)
-    {
-        return $this->roles()->where('rolename', $roleName)->exists();
-    }
-
-    public function client()
-    {
-        return $this->belongsTo(Client_Model::class, 'client_id', 'id');  
-    }
+    
 
 }

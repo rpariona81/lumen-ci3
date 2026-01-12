@@ -1,6 +1,6 @@
 <?php
 
-//use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Capsule\Manager as DB;
@@ -16,7 +16,7 @@ class MY_Model extends Eloquent
 	//https://stackoverflow.com/questions/49999319/error-converting-nvarchar-to-datetime-data-type-using-laravel-and-mssql
 	//https://stackoverflow.com/questions/35457412/laravel-sqlsrv-unable-to-create-timestamps
 
-	
+	use hasFactory;
 
 	// Fix SQL server date format 
 	// Only for MSSQL

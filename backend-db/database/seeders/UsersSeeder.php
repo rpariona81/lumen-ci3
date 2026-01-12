@@ -28,7 +28,7 @@ class UsersSeeder extends Seeder
         $demoUser1 = User::create([
             'name' => $faker->name,
             'email' => 'demo@demo.com',
-            'username' => 'demo@demo.com',
+            'username' => 'guest',
             'password' => Hash::make('123456')
         ]);
         $demoUser1->roles()->attach($role_user->id);
@@ -38,7 +38,7 @@ class UsersSeeder extends Seeder
         $demoUser2 = User::create([
             'name' => $faker->name,
             'email' => 'admin@demo.com',
-            'username' => 'admin@demo.com',
+            'username' => 'admin',
             'password' => Hash::make('123456')
         ]);
         $demoUser2->roles()->attach($role_admin->id);
@@ -48,7 +48,7 @@ class UsersSeeder extends Seeder
         $demoUser3 = User::create([
             'name' => $faker->name,
             'email' => 'support@demo.com',
-            'username' => 'support@demo.com',
+            'username' => 'support',
             'password' => Hash::make('123456')
         ]);
         $demoUser3->roles()->attach($role_admin->id);
@@ -58,7 +58,7 @@ class UsersSeeder extends Seeder
         $demoUser4 = User::create([
             'name' => $faker->name,
             'email' => 'user@example.com',
-            'username' => 'user@example.com',
+            'username' => 'user',
             'password' => Hash::make('123456'),
         ]);
         $demoUser4->roles()->attach($role_admin->id);
@@ -68,7 +68,7 @@ class UsersSeeder extends Seeder
         $demoUser5 = User::create([
             'name' => $faker->name,
             'email' => 'student@example.com',
-            'username' => 'student@example.com',
+            'username' => 'student',
             'password' => Hash::make('123456')
         ]);
         $demoUser5->roles()->attach($role_user->id);
@@ -78,7 +78,7 @@ class UsersSeeder extends Seeder
         $demoUser6 = User::create([
             'name' => $faker->name,
             'email' => 'graduated@example.com',
-            'username' => 'graduated@example.com',
+            'username' => 'graduated',
             'password' => Hash::make('123456')
         ]);
         $demoUser6->roles()->attach($role_user->id);
