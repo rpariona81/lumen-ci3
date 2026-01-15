@@ -3,12 +3,14 @@
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Carbon;
-use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 //https://notes.enovision.net/codeigniter/eloquent-in-codeigniter/how-to-use-the-models
 
 class Client_Model extends MY_Model
 {
+	use HasFactory;
+	
 	protected $table = 't_clients';
 
 	protected $fillable = [

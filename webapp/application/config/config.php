@@ -23,7 +23,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = '';
+$root=(isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST'];
+$root.= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+
+//$config['base_url'] = $root;
+
+$config['base_url'] = getenv('APP_URL') != null ? getenv('APP_URL') : $root;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,7 +108,7 @@ $config['charset'] = 'UTF-8';
 | setting this variable to TRUE (boolean).  See the user guide for details.
 |
 */
-$config['enable_hooks'] = FALSE;
+$config['enable_hooks'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -312,7 +317,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/userguide3/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = getenv('APP_KEY') ?? 'df%@bsd6789f6er85SfSDaASF!!=';
 
 /*
 |--------------------------------------------------------------------------
@@ -370,12 +375,12 @@ $config['encryption_key'] = '';
 |
 */
 $config['sess_driver'] = 'database';
-$config['sess_cookie_name'] = 'ci_session';
-$config['sess_samesite'] = 'Lax';
+$config['sess_cookie_name'] = 'xi_session';
+$config['sess_samesite'] = 'xaLax';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = 't_sessions';
-$config['sess_match_ip'] = FALSE;
-$config['sess_time_to_update'] = 3600;
+$config['sess_save_path'] = getenv('SESSION_PATH') ?? 'xi_sessions';
+$config['sess_match_ip'] = TRUE;
+$config['sess_time_to_update'] = 600;
 $config['sess_regenerate_destroy'] = TRUE;
 
 /*

@@ -55,3 +55,17 @@ $route['translate_uri_dashes'] = FALSE;
 
 //$route['testlogin:(:any)/(:any)'] = 'welcome/testlogin/$1/$2';
 $route['testlogin'] = 'welcome/testlogin';
+$route['testlogin1'] = 'welcome/testlogin1';
+$route['testlogin2'] = 'welcome/testlogin2';
+$route['testlogin3'] = 'welcome/testlogin3';
+
+
+$route['login'] = 'authcontroller/index';
+$route['logon'] = 'authcontroller/logon';
+$route['logout'] = 'authcontroller/logout';
+
+
+$route['user'] = 'appcontroller/index';
+
+
+$route['admin'] = 'admincontroller/index';

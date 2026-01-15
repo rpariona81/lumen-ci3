@@ -60,21 +60,79 @@ class Welcome extends CI_Controller
 
 	public function testlogin()
 	{
-		session_destroy();
-		$usernameForm = 'guest';
+		//session_destroy();
+		$usernameForm = 'user';
 		$passwordForm = '123456';
 
 		$this->load->library('LoginLib');
-		$this->load->library('session');
-		$user = $this->loginlib->login($usernameForm, $passwordForm);
-		if ($user) {
+		//$this->load->library('session');
+		$userLogged = $this->loginlib->login($usernameForm, $passwordForm);
+		if ($userLogged) {
 			//print_r(json_encode($user));
+			/*$session_id = session_id();
+			$session_opened = 
 			$newdata = array(
 				'User'	=> $user['username'],
 				'Role'	=> $user['roles'][0]->roledisplay,
 				'Client'	=> $user['client']->client_name,
-				'is_logged_in'	=> true);
+				'is_logged_in'	=> true
+			);
 			$this->session->set_userdata($newdata);
+			//$this->session->set
+			print_r(json_encode($this->session->all_userdata()));
+			*/
+			//echo "Login successful";
+			print_r(json_encode($this->session->all_userdata()));
+		} else {
+			echo "Login failed";
+		}
+	}
+
+	public function testlogin1()
+	{
+		//session_destroy();
+		$usernameForm = 'graduated';
+		$passwordForm = '123456';
+
+		$this->load->library('LoginLib');
+		//$this->load->library('session');
+		$userLogged1 = $this->loginlib->login($usernameForm, $passwordForm);
+		if ($userLogged1) {
+			//echo "Login successful";
+			print_r(json_encode($this->session->all_userdata()));
+		} else {
+			echo "Login failed";
+		}
+	}
+
+	public function testlogin2()
+	{
+		//session_destroy();
+		$usernameForm = 'student';
+		$passwordForm = '123456';
+
+		$this->load->library('LoginLib');
+		//$this->load->library('session');
+		$userLogged2 = $this->loginlib->login($usernameForm, $passwordForm);
+		if ($userLogged2) {
+			//echo "Login successful";
+			print_r(json_encode($this->session->all_userdata()));
+		} else {
+			echo "Login failed";
+		}
+	}
+
+	public function testlogin3()
+	{
+		//session_destroy();
+		$usernameForm = 'guest';
+		$passwordForm = '123456';
+
+		$this->load->library('LoginLib');
+		//$this->load->library('session');
+		$userLogged3 = $this->loginlib->login($usernameForm, $passwordForm);
+		if ($userLogged3) {
+			//echo "Login successful";
 			print_r(json_encode($this->session->all_userdata()));
 		} else {
 			echo "Login failed";

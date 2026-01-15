@@ -24,7 +24,9 @@ class DatabaseSeeder extends Seeder
                 CatalogSeeder::class,
                 CareerSeeder::class,
                 OfferClientSeeder::class,
-                EbookSeeder::class
+                EbookSeeder::class,
+                RepoClientSeeder::class,
+                ViewBookSeeder::class,
             ]
         );
 
