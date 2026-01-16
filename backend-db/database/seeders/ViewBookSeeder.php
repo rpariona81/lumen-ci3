@@ -23,7 +23,7 @@ class ViewBookSeeder extends Seeder
         $client2 = Client::where('client_name', 'Client 02')->first();
         $client3 = Client::where('client_name', 'Client 03')->first();
 
-        $user1 = User::where('email', 'demo@demo.com')->first();
+        $user1 = User::where('email', 'userdemo@demo.com')->first();
         $user2 = User::where('email', 'admin@demo.com')->first();
         $user3 = User::where('email', 'support@demo.com')->first();
 

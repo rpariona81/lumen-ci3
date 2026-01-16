@@ -38,7 +38,21 @@ if (!function_exists('my_error')) {
         if ($error) {
             $salida = '<div class="alert alert-danger alert-dismissible fade show" role="alert"  style="font-size: 0.9em; padding: 0.9em">';
             $salida = $salida . '<strong>' . $error . '</strong>';
-            $salida = $salida . '  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+            $salida = $salida . '  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+        }
+        return $salida;
+    }
+}
+
+if (!function_exists('my_success')) {
+
+    function my_success($success)
+    {
+        $salida = '';
+        if ($success) {
+            $salida = '<div class="alert alert-success alert-dismissible fade show" role="alert"  style="font-size: 0.9em; padding: 0.9em">';
+            $salida = $salida . '<strong>' . $success . '</strong>';
+            $salida = $salida . '  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
         }
         return $salida;
     }

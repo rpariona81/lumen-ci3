@@ -18,54 +18,58 @@ class LoginLib
         $this->ci->load->library('session');
     }
 
-    public function login($username, $password)
+    public function login($email, $password)
     {
         try {
             //code...
-            $user = $this->ci->User_model->where('username', $username)->first();
+            $user = $this->ci->User_model->where('email', $email)->first();
 
-            if ($user->enabled && password_verify($password, $user->password)) {
+            if ($user->enabled) {
+                if (password_verify($password, $user->password)) {
+                    if (empty($user->roles) || empty($user->client)) {
+                        // User has no roles or client assigned
+                        $this->ci->session->set_flashdata('error', 'Registro erróneo! Contacte con su administrador.');
+                        return false;
+                    } else {
+                        // Login successful
+                        $user->last_login_at = Carbon::now()->toDateTimeString();
+                        $user->last_login_ip = $this->ci->input->ip_address();
+                        $user->save();
 
-                if (empty($user->roles) || empty($user->client)) {
-                    // User has no roles or client assigned
-                    $this->ci->session->set_flashdata('No autorizado! Contacte con su administrador.');
-                    return false;
-                } else {
-                    // Login successful
-                    $user->last_login_at = Carbon::now()->toDateTimeString();
-                    $user->last_login_ip = $this->ci->input->ip_address();
-                    $user->save();
-
-                    $session_id = $this->ci->session->session_id;
-                    $session_opened = $this->ci->Session_model::find($session_id);
-                    if ($session_opened) {
-                        //$session_opened = new $this->ci->Session_model();
-                        $session_opened->last_activity = Carbon::now()->getTimestamp();
-                        $session_opened->user_id = $user->id;
-                        $session_opened->ip_address = $this->ci->input->ip_address();
-                        $session_opened->user_agent = $this->ci->input->user_agent();
-                        //$session_opened->is_logged_out = 0;
-                        $session_opened->save();
+                        $session_id = $this->ci->session->session_id;
+                        $session_opened = $this->ci->Session_model::find($session_id);
+                        if ($session_opened) {
+                            //$session_opened = new $this->ci->Session_model();
+                            $session_opened->last_activity = Carbon::now()->getTimestamp();
+                            $session_opened->user_id = $user->id;
+                            $session_opened->ip_address = $this->ci->input->ip_address();
+                            $session_opened->user_agent = $this->ci->input->user_agent();
+                            //$session_opened->is_logged_out = 0;
+                            $session_opened->save();
+                        }
+                        $newdata = array(
+                            'User'    => $user['username'],
+                            'Role'    => $user['roles'][0]->roledisplay,
+                            'Client'    => $user['client']->client_name,
+                            'User_guard' => $user['roles'][0]->guard_name,
+                            'isLogged'    => true
+                        );
+                        $this->ci->session->set_userdata($newdata);
+                        //Login successful
+                        return true;
                     }
-                    $newdata = array(
-                        'User'    => $user['username'],
-                        'Role'    => $user['roles'][0]->roledisplay,
-                        'Client'    => $user['client']->client_name,
-                        'User_guard' => $user['roles'][0]->guard_name,
-                        'isLogged'    => true
-                    );
-                    $this->ci->session->set_userdata($newdata);
-                    //Login successful
-                    return true;
+                } else {
+                    // Login failed
+                    $this->ci->session->set_flashdata('error', 'Error de usuario y/o contraseña.');
+                    return false;
                 }
             } else {
-                // Login failed
-                $this->ci->session->set_flashdata('Error de usuario y/o contraseña.');
+                $this->ci->session->set_flashdata('error', 'No autorizado! Contacte con su administrador.');
                 return false;
             }
         } catch (\Throwable $th) {
             //throw $th;
-            $this->ci->session->set_flashdata('Este usuario no existe o está desactivado.');
+            $this->ci->session->set_flashdata('error', 'Este usuario no existe o está desactivado.');
             return false;
         }
     }

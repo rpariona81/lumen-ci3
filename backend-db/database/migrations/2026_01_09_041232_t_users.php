@@ -15,14 +15,15 @@ return new class extends Migration
     {
         Schema::create('t_users', function (Blueprint $table) {
             $table->bigIncrements('id'); // user id
-            $table->string('name');
+            $table->string('firstname')->nullable();
+            $table->string('lastname')->nullable();
             $table->string('email')->unique();
-            $table->string('username')->unique();
+            $table->string('username')->unique()->nullable();
             $table->string('avatar')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('email_subscribed')->default(true);
-            $table->boolean('enabled')->default(true);
+            $table->boolean('enabled')->default(false);
             $table->rememberToken();
             $table->datetime('last_login_at')->nullable();
             $table->string('last_login_ip')->nullable();

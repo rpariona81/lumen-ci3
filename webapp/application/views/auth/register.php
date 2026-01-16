@@ -68,12 +68,30 @@ License: For each use you must have a valid license purchased only from above li
                         <div class="separator my-2"></div>
                         <!--end::Menu separator--><br>
                         <?php
+                        $firstname = array(
+                            'name' => 'firstname',
+                            'class' => 'form-control m-top-10',
+                            'type' => 'text',
+                            'id' => 'firstname',
+                            'value' => set_value('firstname'),
+                            'placeholder' => 'Nombres',
+                        );
+
+                        $lastname = array(
+                            'name' => 'lastname',
+                            'class' => 'form-control m-top-10',
+                            'type' => 'text',
+                            'id' => 'lastname',
+                            'value' => set_value('lastname'),
+                            'placeholder' => 'Apellidos',
+                        );
+
                         $email = array(
                             'name' => 'email',
                             'class' => 'form-control m-top-10',
                             'type' => 'email',
                             'id' => 'email',
-                            'autocomplete' => 'off',
+                            'value' => set_value('email'),
                             'placeholder' => 'Email',
                         );
 
@@ -86,51 +104,71 @@ License: For each use you must have a valid license purchased only from above li
                             'placeholder' => 'Contraseña',
                         );
 
-                        $login_submit = array(
-                            'name' => 'login_submit',
+                        $confirmpassword = array(
+                            'name' => 'confirmpassword',
+                            'class' => 'form-control m-top-10',
+                            'type' => 'password',
+                            'id' => 'confirmpassword',
+                            'autocomplete' => 'off',
+                            'placeholder' => 'Confirmar contraseña',
+                        );
+
+                        $register_submit = array(
+                            'name' => 'register_submit',
                             'class' => 'btn btn-primary m-top-10',
-                            'value' => 'Ingresar',
+                            'value' => 'Enviar solicitud',
                             'id' => 'kt_sign_in_submit'
                         );
 
-                        echo form_open('logon', array('class' => 'form w-100', 'id' => 'kt_sign_in_form')); ?>
+                        echo form_open('registration', array('class' => 'form w-100', 'id' => 'kt_sign_in_form')); ?>
                         <!--begin::Heading-->
                         <div class="text-center mb-11">
                             <!--begin::Title-->
                             <h1 class="text-gray-900 fw-bolder mb-3">
-                                Iniciar sesión
-                                
+                                Solicitud de registro
                             </h1>
-                            <p><?= my_success($this->session->flashdata('success')) ?></p>
                             <!--end::Title-->
                         </div>
                         <!--begin::Heading-->
 
                         <div class="fv-row mb-8">
+                            <?php echo form_input($firstname);
+                            echo '<div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">' . form_error('firstname') . '</div>'; ?>
+                        </div>
+                        <div class="fv-row mb-8">
+                            <?php echo form_input($lastname);
+                            echo '<div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">' . form_error('lastname') . '</div>'; ?>
+                        </div>
+                        <div class="fv-row mb-8">
                             <?php echo form_input($email);
                             echo '<div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">' . form_error('email') . '</div>'; ?>
                         </div>
-                        <div class="fv-row mb-3">
+                        <div class="fv-row mb-8">
                             <?php echo form_input($password);
                             echo '<div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">' . form_error('password') . '</div>'; ?>
                         </div>
+                        <div class="fv-row mb-8">
+                            <?php echo form_input($confirmpassword);
+                            echo '<div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">' . form_error('confirmpassword') . '</div>'; ?>
+                        </div>
+                        
                         <p><?= my_error($this->session->flashdata('error')) ?></p>
                         <!--begin::Wrapper-->
-                        <br/>
+                        <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
+                            <div></div>
+                            <!--begin::Link-->
+                            <a href="<?= base_url('login') ?>" class="link-primary">
+                                Ya tiene una cuenta? Iniciar sesión
+                            </a>
+                            <!--end::Link-->
+                        </div>
                         <div class="d-grid mb-10">
                             <!--end::Wrapper-->
-                            <?php echo form_submit($login_submit); ?>
+                            <?php echo form_submit($register_submit); ?>
                         </div>
                         <?php echo form_close();
                         ?>
-                        <!--begin::Sign up-->
-                        <div class="text-gray-500 text-center fw-semibold fs-6">
-                            No tiene cuenta?
-
-                            <a href="<?= base_url('register') ?>" class="link-primary">
-                                Regístrese
-                            </a>
-                        </div>
+                        <br/>
                         <!--end::Sign up-->
                     </div>
                     <!--end::Wrapper-->

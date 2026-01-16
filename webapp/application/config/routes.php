@@ -63,7 +63,11 @@ $route['testlogin3'] = 'welcome/testlogin3';
 $route['login'] = 'authcontroller/index';
 $route['logon'] = 'authcontroller/logon';
 $route['logout'] = 'authcontroller/logout';
+$route['register'] = 'authcontroller/register';
+$route['registration'] = 'authcontroller/registration';
 
+
+$route['home'] = 'homecontroller/index';
 
 $route['user'] = 'appcontroller/index';
 

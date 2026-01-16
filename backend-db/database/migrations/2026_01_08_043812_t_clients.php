@@ -24,6 +24,7 @@ return new class extends Migration
             $table->boolean('status')->default(true);
             $table->date('client_date_license')->nullable();
             $table->string('client_weburl')->nullable();
+            $table->string('client_subdomain')->nullable();
             $table->timestamps();
         });
     }

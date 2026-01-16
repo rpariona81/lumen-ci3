@@ -24,7 +24,8 @@ class ClientsSeeder extends Seeder
                 'client_verified_at'=> Carbon::now(),
                 'client_display'    => 'Client 01 Display Name',
                 'client_date_license'=> Carbon::now()->addYear(),
-                'client_weburl'     => 'https://www.client01.com'
+                'client_weburl'     => 'https://www.client01.com',
+                'client_subdomain'  => 'client01'
            ]            
         );
         $client2 = Client::create(
@@ -36,7 +37,8 @@ class ClientsSeeder extends Seeder
                 'client_verified_at'=> Carbon::now(),
                 'client_display'    => 'Client 02 Display Name',
                 'client_date_license'=> Carbon::now()->addYear(),
-                'client_weburl'     => 'https://www.client02.com'
+                'client_weburl'     => 'https://www.client02.com',
+                'client_subdomain'  => 'client02'
            ]            
         );
         $client3 = Client::create(
@@ -48,7 +50,8 @@ class ClientsSeeder extends Seeder
                 'client_verified_at'=> Carbon::now(),
                 'client_display'    => 'Client 03 Display Name',
                 'client_date_license'=> Carbon::now()->addYear(),
-                'client_weburl'     => 'https://www.client03.com'
+                'client_weburl'     => 'https://www.client03.com',
+                'client_subdomain'  => 'client03'
            ]            
         );
     }

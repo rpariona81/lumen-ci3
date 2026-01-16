@@ -14,11 +14,14 @@ class User_Model extends MY_Model
     protected $table = 't_users';
 
     protected $fillable = [
-        'name',
+        'firstname',
+        'lastname',
         'username',
-        'email',
-        'password',
+        'email', 
+        'password', 
+        'email_verified_at',
         'enabled',
+        'client_id',
         'remember_token', //varchar
         'email_verified_at', //datetime
     ];
