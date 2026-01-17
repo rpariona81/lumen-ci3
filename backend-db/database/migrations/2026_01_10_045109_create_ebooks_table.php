@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('ebook_categories')->nullable();
             $table->string('ebook_tags')->nullable();
             $table->boolean('ebook_available')->default(true);
+            $table->unsignedBigInteger('catalog_id')->nullable(); //'catalog_id
             $table->timestamps();
             $table->softDeletes();
         });

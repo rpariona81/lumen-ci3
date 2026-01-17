@@ -83,14 +83,22 @@ class Welcome extends CI_Controller
 		print_r(json_encode($data['ebooks_client']));
 		*/
 
-		$results = $this->Ebook_model::where('ebook_title', 'ILIKE', '%' . $search_text . '%')->orWhere('ebook_author', 'ILIKE', '%' . $search_text . '%')->orWhere('ebook_editorial', 'ILIKE', '%' . $search_text . '%')
-			->orWhere('ebook_tags', 'ILIKE', '%' . $search_text . '%')
-			->orWhere('ebook_display', 'ILIKE', '%' . $search_text . '%')
+		/*
+		$results = $this->Ebook_model::where('ebook_title', 'LIKE', '%' . $search_text . '%')
+			->orWhere('ebook_author', 'LIKE', '%' . $search_text . '%')
+			->orWhere('ebook_editorial', 'LIKE', '%' . $search_text . '%')
+			->orWhere('ebook_tags', 'LIKE', '%' . $search_text . '%')
+			->orWhere('ebook_display', 'LIKE', '%' . $search_text . '%')
 			->whereHas('clients', function ($q) {
 				$q->where('client_id', 1)
-				  ->where('authorized', 1);
+					->where('authorized', 1);
 			})->get();
-		$data['ebooks_client'] = $results;
+		$data['ebooks_client'] = $results->count();
+		print_r(json_encode($data['ebooks_client']));
+		*/
+
+		$datos = $this->Ebook_model::getPaginateSearchBooks(2, 2, $search_text, 1);
+		$data['ebooks_client'] = $datos;
 		print_r(json_encode($data['ebooks_client']));
 	}
 
