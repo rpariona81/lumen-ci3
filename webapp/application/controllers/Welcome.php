@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Welcome extends CI_Controller
 {
@@ -19,13 +19,18 @@ class Welcome extends CI_Controller
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/userguide3/general/urls.html
 	 */
+
+	protected $search_text;
+
 	public function index()
 	{
 		//$this->load->view('welcome_message');
 		$data = array();
+
 		$this->load->model('Client_model');
 		$this->load->model('Role_model');
 		$this->load->model('User_model');
+		$this->load->model('Ebook_model');
 
 		/* 
 		$users = $this->User_model::all();
@@ -45,17 +50,48 @@ class Welcome extends CI_Controller
 		print_r(json_encode($data['roles']));
 		 */
 
-		
+
+		/*
 		$user = $this->User_model::findOrFail(1);
 		if ($user->hasRole('user')) {
 			//echo "El usuario es administrador";
 			//print_r(json_encode($user->with('client')->get()));
-			print_r(json_encode($user));
+			//print_r(json_encode($user));
+			print_r(json_encode($user['client_id'].' - '.$user->client->client_name));
 		} else {
 			echo "El usuario no es administrador";
 			//print_r(json_encode($user));
 		}
-		
+		*/
+
+		/*
+		$books = $this->Ebook_model::with('clients')->where('id',1)->get();
+		$data['ebooks'] = $books;
+		print_r(json_encode($data['ebooks']));
+		*/
+
+		$search_text = 'cocina';
+
+		/*
+		$query = $this->Ebook_model::whereHas('clients', function ($q) {
+			$q->where('client_id', 1)
+			  ->orWhere('ebook_details', 'LIKE', '%'. $this->search_text .'%')
+			  ->orWhere('ebook_title', 'LIKE', '%'. $this->search_text .'%')
+			  ->orWhere('ebook_display', 'LIKE', '%'. $this->search_text .'%');
+		})->get();
+		$data['ebooks_client'] = $query;
+		print_r(json_encode($data['ebooks_client']));
+		*/
+
+		$results = $this->Ebook_model::where('ebook_title', 'ILIKE', '%' . $search_text . '%')->orWhere('ebook_author', 'ILIKE', '%' . $search_text . '%')->orWhere('ebook_editorial', 'ILIKE', '%' . $search_text . '%')
+			->orWhere('ebook_tags', 'ILIKE', '%' . $search_text . '%')
+			->orWhere('ebook_display', 'ILIKE', '%' . $search_text . '%')
+			->whereHas('clients', function ($q) {
+				$q->where('client_id', 1)
+				  ->where('authorized', 1);
+			})->get();
+		$data['ebooks_client'] = $results;
+		print_r(json_encode($data['ebooks_client']));
 	}
 
 	public function testlogin()

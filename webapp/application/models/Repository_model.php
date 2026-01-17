@@ -33,7 +33,7 @@ class Repository_Model extends MY_Model
 
     public function client()
     {
-        return $this->belongsTo(Client::class, 'client_id');
+        return $this->belongsTo(Client_model::class, 'client_id');
     }
 
 }

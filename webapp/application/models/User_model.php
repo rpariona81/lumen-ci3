@@ -57,7 +57,7 @@ class User_Model extends MY_Model
 
     public function client()
     {
-        return $this->belongsTo(Client_Model::class, 'client_id', 'id');  
+        return $this->belongsTo(Client_model::class, 'client_id', 'id');  
     }
     
     protected $appends = ['userflag'];

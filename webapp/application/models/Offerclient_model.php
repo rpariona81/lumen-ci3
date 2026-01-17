@@ -24,11 +24,11 @@ class OfferClient_Model extends MY_Model
 
     public function client()
     {
-        return $this->belongsTo(Client::class, 'client_id');
+        return $this->belongsTo(Client_model::class, 'client_id');
     }
 
     public function career()
     {
-        return $this->belongsTo(Career::class, 'career_id');
+        return $this->belongsTo(Career_model::class, 'career_id');
     }
 }

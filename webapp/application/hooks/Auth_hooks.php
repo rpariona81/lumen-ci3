@@ -12,7 +12,7 @@ class Auth_hooks
 
     public function check_login()
     {
-        $rutas_free = array('/login', 'login', 'logout', '/logout', '/', '/logon', 'logon', '/register', 'register', '/registration', 'registration', '/home', 'home');
+        $rutas_free = array('/login', 'login', 'logout', '/logout', '/', '/logon', 'logon', '/register', 'register', '/registration', 'registration', '/home', 'home', '/about', 'about', '/contact', 'contact', '/welcome', 'welcome');
         $rutas_used = $this->CI->uri->segment(1);
         // Check if user is logged in
         if (in_array($rutas_used, $rutas_free)) {
