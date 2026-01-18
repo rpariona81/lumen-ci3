@@ -25,7 +25,7 @@ class AuthController extends CI_Controller
     {
         //echo "Logon function called";
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email');
-        $this->form_validation->set_rules('password', 'Contraseña', 'required|trim|min_length[8]');
+        $this->form_validation->set_rules('password', 'Contraseña', 'required|trim');
         if ($this->form_validation->run() == FALSE) {
             // Validation failed
             $this->index();

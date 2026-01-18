@@ -70,6 +70,7 @@ $route['registration'] = 'authcontroller/registration';
 $route['home'] = 'homecontroller/index';
 
 $route['user'] = 'appcontroller/index';
-
+$route['user/catalog'] = 'appcontroller/view_cards';
+$route['user/catalog/(:num)'] = 'appcontroller/view_cards/$1';
 
 $route['admin'] = 'admincontroller/index';

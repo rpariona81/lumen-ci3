@@ -30,6 +30,9 @@ class EbookSeeder extends Seeder
             'ebook_editorial' => 'Centro de Servicios para la Capacitación Laboral y Desarrollo - CAPLAB',
             'ebook_format' => 'PDF',
             'ebook_available' => true,
+            'ebook_file' => 'GUIA_DEL_ESTUDIANTE_PASTELERIA.pdf',
+            'ebook_front_page' => 'GUIA_DEL_ESTUDIANTE_PASTELERIA.jpg',
+            'ebook_tags' => 'Pastelería, Cocina, Repostería'
         ]);
         $ebook1->clients()->attach($client1->id, ['authorized' => true]);
         $ebook1->clients()->attach($client2->id, ['authorized' => true]);
@@ -44,6 +47,9 @@ class EbookSeeder extends Seeder
             'ebook_editorial' => 'Editorial Salud y Vida',
             'ebook_format' => 'ePub',
             'ebook_available' => true,
+            'ebook_file' => 'MANUAL_DE_COCINA_SALUDABLE.epub',
+            'ebook_front_page' => 'MANUAL_DE_COCINA_SALUDABLE.jpg',
+            'ebook_tags' => 'Cocina Saludable, Nutrición, Bienestar'
         ]);
         $ebook2->clients()->attach($client1->id, ['authorized' => true]);
         $ebook2->clients()->attach($client2->id, ['authorized' => true]);
@@ -59,6 +65,9 @@ class EbookSeeder extends Seeder
             'ebook_editorial' => 'Gastronomía y Arte Editorial',
             'ebook_format' => 'PDF',
             'ebook_available' => true,
+            'ebook_file' => 'TECNICAS_DE_REPOSTERIA_MODERNA.pdf',
+            'ebook_front_page' => 'TECNICAS_DE_REPOSTERIA_MODERNA.jpg',
+            'ebook_tags' => 'Repostería, Técnicas, Cocina'
         ]);
         $ebook3->clients()->attach($client2->id, ['authorized' => true]);
         $ebook3->clients()->attach($client3->id, ['authorized' => true]);
@@ -73,6 +82,9 @@ class EbookSeeder extends Seeder
             'ebook_editorial' => 'Mundo Culinario Editorial',
             'ebook_format' => 'ePub',
             'ebook_available' => true,
+            'ebook_file' => 'COCINA_INTERNACIONAL_PARA_PRINCIPIANTES.epub',
+            'ebook_front_page' => 'COCINA_INTERNACIONAL_PARA_PRINCIPIANTES.jpg',
+            'ebook_tags' => 'Cocina Internacional, Cocina, Recetas'
         ]);
         $ebook4->clients()->attach($client1->id, ['authorized' => true]);
         $ebook4->clients()->attach($client2->id, ['authorized' => true]);
@@ -87,6 +99,9 @@ class EbookSeeder extends Seeder
             'ebook_editorial' => 'Vida Saludable Editorial',
             'ebook_format' => 'PDF',
             'ebook_available' => true,
+            'ebook_file' => 'FUNDAMENTOS_DE_LA_COCINA_VEGETARIANA.pdf',
+            'ebook_front_page' => 'FUNDAMENTOS_DE_LA_COCINA_VEGETARIANA.jpg',
+            'ebook_tags' => 'Cocina Vegetariana, Saludable, Nutrición'
         ]);
         $ebook5->clients()->attach($client2->id, ['authorized' => true]);
         $ebook5->clients()->attach($client3->id, ['authorized' => true]);
@@ -101,6 +116,9 @@ class EbookSeeder extends Seeder
             'ebook_editorial' => 'Sabores del Mundo Editorial',
             'ebook_format' => 'ePub',
             'ebook_available' => true,
+            'ebook_file' => 'POSTRES_Y_DULCES_TRADICIONALES.epub',
+            'ebook_front_page' => 'POSTRES_Y_DULCES_TRADICIONALES.jpg',
+            'ebook_tags' => 'Postres, Dulces, Repostería'
         ]);
         $ebook6->clients()->attach($client1->id, ['authorized' => true]);
         $ebook6->clients()->attach($client3->id, ['authorized' => true]);
@@ -115,6 +133,9 @@ class EbookSeeder extends Seeder
             'ebook_editorial' => 'Editorial Cocina Práctica',
             'ebook_format' => 'PDF',
             'ebook_available' => true,
+            'ebook_file' => 'COCINA_RAPIDA_Y_FACIL_PARA_TODOS.pdf',
+            'ebook_front_page' => 'COCINA_RAPIDA_Y_FACIL_PARA_TODOS.jpg',
+            'ebook_tags' => 'Cocina Rápida, Fácil, Recetas'
         ]);
         $ebook7->clients()->attach($client1->id, ['authorized' => true]);
         $ebook7->clients()->attach($client3->id, ['authorized' => true]);
@@ -129,6 +150,9 @@ class EbookSeeder extends Seeder
             'ebook_editorial' => 'Gastronomía de Lujo Editorial',
             'ebook_format' => 'ePub',
             'ebook_available' => true,
+            'ebook_file' => 'COCINA_GOURMET_PARA_OCASIONES_ESPECIALES.epub',
+            'ebook_front_page' => 'COCINA_GOURMET_PARA_OCASIONES_ESPECIALES.jpg',
+            'ebook_tags' => 'Cocina Gourmet, Lujo, Recetas'
         ]);
         $ebook8->clients()->attach($client2->id, ['authorized' => true]);
         $ebook8->clients()->attach($client3->id, ['authorized' => true]);
@@ -143,6 +167,9 @@ class EbookSeeder extends Seeder
             'ebook_editorial' => 'Mundo Culinario Editorial',
             'ebook_format' => 'PDF',
             'ebook_available' => true,
+            'ebook_file' => 'COCINA_INTERNACIONAL_AVANZADA.pdf',
+            'ebook_front_page' => 'COCINA_INTERNACIONAL_AVANZADA.jpg',
+            'ebook_tags' => 'Cocina Internacional, Avanzada, Recetas'
         ]);
         $ebook9->clients()->attach($client2->id, ['authorized' => true]);
         $ebook9->clients()->attach($client3->id, ['authorized' => true]);
@@ -157,6 +184,9 @@ class EbookSeeder extends Seeder
             'ebook_editorial' => 'Gastronomía y Arte Editorial',
             'ebook_format' => 'ePub',
             'ebook_available' => true,
+            'ebook_file' => 'TECNICAS_DE_COCINA_PROFESIONAL.epub',
+            'ebook_front_page' => 'TECNICAS_DE_COCINA_PROFESIONAL.jpg',
+            'ebook_tags' => 'Cocina Profesional, Técnicas, Gastronomía'
         ]);
         $ebook10->clients()->attach($client1->id, ['authorized' => true]);
         $ebook10->clients()->attach($client2->id, ['authorized' => true]);
@@ -172,6 +202,9 @@ class EbookSeeder extends Seeder
             'ebook_editorial' => 'Editorial Salud y Vida',
             'ebook_format' => 'PDF',
             'ebook_available' => true,
+            'ebook_file' => 'COCINA_SALUDABLE_PARA_NINOS.pdf',
+            'ebook_front_page' => 'COCINA_SALUDABLE_PARA_NINOS.jpg',
+            'ebook_tags' => 'Cocina Saludable, Niños, Nutrición'
         ]);
         $ebook11->clients()->attach($client1->id, ['authorized' => true]);
         $ebook11->clients()->attach($client2->id, ['authorized' => true]);
@@ -186,6 +219,9 @@ class EbookSeeder extends Seeder
             'ebook_editorial' => 'Sabores del Mundo Editorial',
             'ebook_format' => 'ePub',
             'ebook_available' => true,
+            'ebook_file' => 'REPOSTERIA_CREATIVA_PARA_FIESTAS.epub',
+            'ebook_front_page' => 'REPOSTERIA_CREATIVA_PARA_FIESTAS.jpg',
+            'ebook_tags' => 'Repostería Creativa, Fiestas, Celebraciones'
         ]);
         $ebook12->clients()->attach($client1->id, ['authorized' => true]);
         $ebook12->clients()->attach($client2->id, ['authorized' => true]);

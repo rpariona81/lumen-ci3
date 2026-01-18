@@ -13,12 +13,23 @@ class AppController extends CI_Controller
         $this->load->model('Client_model');
         $this->load->model('Repository_model');
         $this->load->model('Ebook_model');
+        $this->load->library('pagination');
     }
 
     public function index()
     {
         // Load app view
-        //echo "App Controller";
+        //echo "App Controller.<br/>Client info:<br/>";
+        //print_r($this->session->userdata());
+        /*
+        $client_id = $this->session->userdata('Client') ? $this->Client_model->where('client_name', $this->session->userdata('Client'))->first()->id : null;
+        print_r($client_id);
+        $search_text = '';
+        $total_row = Ebook_model::getCantSearchEbooks($search_text, $client_id); //total row
+        print_r($total_row);
+        $data['records'] = Ebook_Model::getPaginateSearchBooks(12, 4, $search_text, $client_id);
+        print_r($data['records']->toArray());
+        */
         $data = [];
         $data['pagina_title'] = 'Catálogo de libros';
         $data['content'] = 'app/listCatalogosCardsPageIndex';
@@ -29,20 +40,26 @@ class AppController extends CI_Controller
     {
         // Load app view
         //echo "App Controller";
-        $search_text = is_string($this->input->post('search_key', true)) ? strip_tags(trim(strip_tags($this->input->post('search_key', true)))) : '';
-            $total_row = Ebook_model::getCantSearchEbooks($search_text); //total row
+        $client_id = $this->session->userdata('Client') ? $this->Client_model->where('client_name', $this->session->userdata('Client'))->first()->id : null;
+        //echo $client_id . '...';
+        if ($client_id == null) {
+            redirect(base_url() . 'login');
+        } else {
+            //echo "Client ID: ".$client_id;
+            $search_text = is_string($this->input->post('search_key', true)) ? strip_tags(trim(strip_tags($this->input->post('search_key', true)))) : '';
+            $total_row = Ebook_model::getCantSearchEbooks($search_text, $client_id); //total row
             //print_r($total_row);
             $data = array();
             if ($total_row > 0) {
                 $data['resultFlag'] = TRUE;
                 $config['base_url'] = base_url() . '/user/catalog/';
-                $data['total_row'] = Ebook_model::getCantSearchEbooks($search_text); //total row
+                $data['total_row'] = Ebook_model::getCantSearchEbooks($search_text, $client_id); //total row
                 $config['total_rows'] = $total_row;
                 $data['pagina_title'] = $this->uri->segment(2);
                 $config['per_page'] = 9;  //show record per halaman
                 $config['uri_segment'] = 3;
                 $config['use_page_numbers'] = TRUE;
-                
+
                 $config['page_query_string'] = FALSE;
                 $config['enable_query_strings'] = FALSE;
 
@@ -68,13 +85,13 @@ class AppController extends CI_Controller
                 $config['num_tag_close']    = '</span></li>';
                 $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link" aria-current="page">';
                 $config['cur_tag_close']    = '</span></li>';
-                
+
                 $config['next_tag_open']    = '<li class="page-item"><span class="page-link" aria-hidden="true">';
                 $config['next_tag_close']  = '</span></li>';
                 $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
                 $config['prev_tag_close']  = '</span></li>';
-                
-                
+
+
 
                 $this->pagination->initialize($config);
                 $data['page'] = ($this->uri->segment(3)) ? ($this->uri->segment(3) - 1) * $config['per_page'] : 0;
@@ -85,18 +102,19 @@ class AppController extends CI_Controller
                 //$results = User_Eloquent::skip($this->uri->segment(4))->take($config['per_page'])->get();
                 //$this->data['records'] = User_Eloquent::skip($this->data['page'])->take($config['per_page'])->get();
                 //$data['records'] = BookEloquent::getEbooksPaginate($data['page'], $config['per_page']);
-                $data['records'] = BookEloquent::searchBooksPaginate2($data['page'], $config['per_page'], $search_text);
+                $data['records'] = Ebook_Model::getPaginateSearchBooks($data['page'], $config['per_page'], $search_text, $client_id);
 
                 $data['pagination'] = $this->pagination->create_links();
                 //$data['content'] = 'app/listCatalogosCardsPageAjax';
                 //$this->load->view('app/templateApp', $data);
                 //$this->load->view('app/listCatalogosCardsPageAjax', $data);
             } else {
-                $data['total_row'] = BookEloquent::getCantSearchEbooks($search_text); //total row
+                $data['total_row'] = Ebook_Model::getCantSearchEbooks($search_text, $client_id); //total row
                 $data['resultFlag'] = FALSE;
                 $data['resultVacio'] = 'No se encontraron libros en su búsqueda, intente con otra expresión.';
                 //print_r($data);
             }
             $this->load->view('app/listCatalogosCardsPageAjax', $data);
+        }
     }
 }

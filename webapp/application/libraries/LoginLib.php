@@ -49,6 +49,7 @@ class LoginLib
                         }
                         $newdata = array(
                             'User'    => $user['username'],
+                            'Email'    => $user['email'],
                             'Role'    => $user['roles'][0]->roledisplay,
                             'Client'    => $user['client']->client_name,
                             'User_guard' => $user['roles'][0]->guard_name,
