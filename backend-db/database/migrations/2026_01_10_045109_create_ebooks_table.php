@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('t_ebooks', function (Blueprint $table) {
             $table->bigincrements('id'); // id
-            $table->string('ebook_code');
-            $table->string('ebook_isbn')->nullable();
+            $table->string('ebook_code')->nullable()->unique();
+            $table->string('ebook_isbn')->nullable()->unique();
             $table->string('ebook_title')->nullable();
             $table->string('ebook_alias')->nullable();
             $table->string('ebook_display')->nullable();

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Faker\Generator;
 
 use App\Models\Client;
 use App\Models\Ebook;
@@ -15,7 +16,7 @@ class EbookSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Generator $faker)
     {
         $client1 = Client::where('client_name', 'Client 01')->first();
         $client2 = Client::where('client_name', 'Client 02')->first();
@@ -23,6 +24,7 @@ class EbookSeeder extends Seeder
 
         $ebook1 = Ebook::create([
             'ebook_code' => '011001',
+            'ebook_isbn' => $faker->isbn13(),
             'ebook_title' => 'Guia Del Estudiante Pasteleria',
             'ebook_alias' => 'GUIA DEL ESTUDIANTE PASTELERIA',
             'ebook_display' => 'Pastelería - Guía Del Estudiante',
@@ -31,7 +33,6 @@ class EbookSeeder extends Seeder
             'ebook_format' => 'PDF',
             'ebook_available' => true,
             'ebook_file' => 'GUIA_DEL_ESTUDIANTE_PASTELERIA.pdf',
-            'ebook_front_page' => 'GUIA_DEL_ESTUDIANTE_PASTELERIA.jpg',
             'ebook_tags' => 'Pastelería, Cocina, Repostería'
         ]);
         $ebook1->clients()->attach($client1->id, ['authorized' => true]);
@@ -40,6 +41,7 @@ class EbookSeeder extends Seeder
 
         $ebook2 = Ebook::create([
             'ebook_code' => '011002',
+            'ebook_isbn' => $faker->isbn13(),
             'ebook_title' => 'Manual de Cocina Saludable',
             'ebook_alias' => 'MANUAL DE COCINA SALUDABLE',
             'ebook_display' => 'Cocina Saludable - Manual',
@@ -48,7 +50,6 @@ class EbookSeeder extends Seeder
             'ebook_format' => 'ePub',
             'ebook_available' => true,
             'ebook_file' => 'MANUAL_DE_COCINA_SALUDABLE.epub',
-            'ebook_front_page' => 'MANUAL_DE_COCINA_SALUDABLE.jpg',
             'ebook_tags' => 'Cocina Saludable, Nutrición, Bienestar'
         ]);
         $ebook2->clients()->attach($client1->id, ['authorized' => true]);
@@ -58,6 +59,7 @@ class EbookSeeder extends Seeder
 
         $ebook3 = Ebook::create([
             'ebook_code' => '011003',
+            'ebook_isbn' => $faker->isbn13(),
             'ebook_title' => 'Técnicas de Repostería Moderna',
             'ebook_alias' => 'TÉCNICAS DE REPOSTERÍA MODERNA',
             'ebook_display' => 'Repostería Moderna - Técnicas',
@@ -66,7 +68,6 @@ class EbookSeeder extends Seeder
             'ebook_format' => 'PDF',
             'ebook_available' => true,
             'ebook_file' => 'TECNICAS_DE_REPOSTERIA_MODERNA.pdf',
-            'ebook_front_page' => 'TECNICAS_DE_REPOSTERIA_MODERNA.jpg',
             'ebook_tags' => 'Repostería, Técnicas, Cocina'
         ]);
         $ebook3->clients()->attach($client2->id, ['authorized' => true]);
@@ -75,6 +76,7 @@ class EbookSeeder extends Seeder
 
         $ebook4 = Ebook::create([
             'ebook_code' => '011004',
+            'ebook_isbn' => $faker->isbn13(),
             'ebook_title' => 'Cocina Internacional para Principiantes',
             'ebook_alias' => 'COCINA INTERNACIONAL PARA PRINCIPIANTES',
             'ebook_display' => 'Cocina Internacional - Principiantes',
@@ -83,7 +85,6 @@ class EbookSeeder extends Seeder
             'ebook_format' => 'ePub',
             'ebook_available' => true,
             'ebook_file' => 'COCINA_INTERNACIONAL_PARA_PRINCIPIANTES.epub',
-            'ebook_front_page' => 'COCINA_INTERNACIONAL_PARA_PRINCIPIANTES.jpg',
             'ebook_tags' => 'Cocina Internacional, Cocina, Recetas'
         ]);
         $ebook4->clients()->attach($client1->id, ['authorized' => true]);
@@ -92,6 +93,7 @@ class EbookSeeder extends Seeder
 
         $ebook5 = Ebook::create([
             'ebook_code' => '011005',
+            'ebook_isbn' => $faker->isbn13(),
             'ebook_title' => 'Fundamentos de la Cocina Vegetariana',
             'ebook_alias' => 'FUNDAMENTOS DE LA COCINA VEGETARIANA',
             'ebook_display' => 'Cocina Vegetariana - Fundamentos',
@@ -100,7 +102,6 @@ class EbookSeeder extends Seeder
             'ebook_format' => 'PDF',
             'ebook_available' => true,
             'ebook_file' => 'FUNDAMENTOS_DE_LA_COCINA_VEGETARIANA.pdf',
-            'ebook_front_page' => 'FUNDAMENTOS_DE_LA_COCINA_VEGETARIANA.jpg',
             'ebook_tags' => 'Cocina Vegetariana, Saludable, Nutrición'
         ]);
         $ebook5->clients()->attach($client2->id, ['authorized' => true]);
@@ -109,6 +110,7 @@ class EbookSeeder extends Seeder
 
         $ebook6 = Ebook::create([
             'ebook_code' => '011006',
+            'ebook_isbn' => $faker->isbn13(),
             'ebook_title' => 'Postres y Dulces Tradicionales',
             'ebook_alias' => 'POSTRES Y DULCES TRADICIONALES',
             'ebook_display' => 'Dulces Tradicionales - Postres',
@@ -117,7 +119,6 @@ class EbookSeeder extends Seeder
             'ebook_format' => 'ePub',
             'ebook_available' => true,
             'ebook_file' => 'POSTRES_Y_DULCES_TRADICIONALES.epub',
-            'ebook_front_page' => 'POSTRES_Y_DULCES_TRADICIONALES.jpg',
             'ebook_tags' => 'Postres, Dulces, Repostería'
         ]);
         $ebook6->clients()->attach($client1->id, ['authorized' => true]);
@@ -126,6 +127,7 @@ class EbookSeeder extends Seeder
 
         $ebook7 = Ebook::create([
             'ebook_code' => '011007',
+            'ebook_isbn' => $faker->isbn13(),
             'ebook_title' => 'Cocina Rápida y Fácil para Todos',
             'ebook_alias' => 'COCINA RÁPIDA Y FÁCIL PARA TODOS',
             'ebook_display' => 'Cocina Rápida - Fácil para Todos',
@@ -134,7 +136,6 @@ class EbookSeeder extends Seeder
             'ebook_format' => 'PDF',
             'ebook_available' => true,
             'ebook_file' => 'COCINA_RAPIDA_Y_FACIL_PARA_TODOS.pdf',
-            'ebook_front_page' => 'COCINA_RAPIDA_Y_FACIL_PARA_TODOS.jpg',
             'ebook_tags' => 'Cocina Rápida, Fácil, Recetas'
         ]);
         $ebook7->clients()->attach($client1->id, ['authorized' => true]);
@@ -143,6 +144,7 @@ class EbookSeeder extends Seeder
 
         $ebook8 = Ebook::create([
             'ebook_code' => '011008',
+            'ebook_isbn' => $faker->isbn13(),
             'ebook_title' => 'Cocina Gourmet para Ocasiones Especiales',
             'ebook_alias' => 'COCINA GOURMET PARA OCASIONES ESPECIALES',
             'ebook_display' => 'Cocina Gourmet - Ocasiones Especiales',
@@ -151,7 +153,6 @@ class EbookSeeder extends Seeder
             'ebook_format' => 'ePub',
             'ebook_available' => true,
             'ebook_file' => 'COCINA_GOURMET_PARA_OCASIONES_ESPECIALES.epub',
-            'ebook_front_page' => 'COCINA_GOURMET_PARA_OCASIONES_ESPECIALES.jpg',
             'ebook_tags' => 'Cocina Gourmet, Lujo, Recetas'
         ]);
         $ebook8->clients()->attach($client2->id, ['authorized' => true]);
@@ -160,6 +161,7 @@ class EbookSeeder extends Seeder
 
         $ebook9 = Ebook::create([
             'ebook_code' => '011009',
+            'ebook_isbn' => $faker->isbn13(),
             'ebook_title' => 'Cocina Internacional Avanzada',
             'ebook_alias' => 'COCINA INTERNACIONAL AVANZADA',
             'ebook_display' => 'Cocina Internacional - Avanzada',
@@ -168,7 +170,6 @@ class EbookSeeder extends Seeder
             'ebook_format' => 'PDF',
             'ebook_available' => true,
             'ebook_file' => 'COCINA_INTERNACIONAL_AVANZADA.pdf',
-            'ebook_front_page' => 'COCINA_INTERNACIONAL_AVANZADA.jpg',
             'ebook_tags' => 'Cocina Internacional, Avanzada, Recetas'
         ]);
         $ebook9->clients()->attach($client2->id, ['authorized' => true]);
@@ -177,6 +178,7 @@ class EbookSeeder extends Seeder
 
         $ebook10 = Ebook::create([
             'ebook_code' => '011010',
+            'ebook_isbn' => $faker->isbn13(),
             'ebook_title' => 'Técnicas de Cocina Profesional',
             'ebook_alias' => 'TÉCNICAS DE COCINA PROFESIONAL',
             'ebook_display' => 'Cocina Profesional - Técnicas',
@@ -185,7 +187,6 @@ class EbookSeeder extends Seeder
             'ebook_format' => 'ePub',
             'ebook_available' => true,
             'ebook_file' => 'TECNICAS_DE_COCINA_PROFESIONAL.epub',
-            'ebook_front_page' => 'TECNICAS_DE_COCINA_PROFESIONAL.jpg',
             'ebook_tags' => 'Cocina Profesional, Técnicas, Gastronomía'
         ]);
         $ebook10->clients()->attach($client1->id, ['authorized' => true]);
@@ -195,6 +196,7 @@ class EbookSeeder extends Seeder
 
         $ebook11 = Ebook::create([
             'ebook_code' => '011011',
+            'ebook_isbn' => $faker->isbn13(),
             'ebook_title' => 'Cocina Saludable para Niños',
             'ebook_alias' => 'COCINA SALUDABLE PARA NIÑOS',
             'ebook_display' => 'Cocina Saludable - Niños',
@@ -203,7 +205,6 @@ class EbookSeeder extends Seeder
             'ebook_format' => 'PDF',
             'ebook_available' => true,
             'ebook_file' => 'COCINA_SALUDABLE_PARA_NINOS.pdf',
-            'ebook_front_page' => 'COCINA_SALUDABLE_PARA_NINOS.jpg',
             'ebook_tags' => 'Cocina Saludable, Niños, Nutrición'
         ]);
         $ebook11->clients()->attach($client1->id, ['authorized' => true]);
@@ -212,6 +213,7 @@ class EbookSeeder extends Seeder
 
         $ebook12 = Ebook::create([
             'ebook_code' => '011012',
+            'ebook_isbn' => $faker->isbn13(),
             'ebook_title' => 'Repostería Creativa para Fiestas',
             'ebook_alias' => 'REPOSTERÍA CREATIVA PARA FIESTAS',
             'ebook_display' => 'Repostería Creativa - Fiestas',
@@ -220,7 +222,6 @@ class EbookSeeder extends Seeder
             'ebook_format' => 'ePub',
             'ebook_available' => true,
             'ebook_file' => 'REPOSTERIA_CREATIVA_PARA_FIESTAS.epub',
-            'ebook_front_page' => 'REPOSTERIA_CREATIVA_PARA_FIESTAS.jpg',
             'ebook_tags' => 'Repostería Creativa, Fiestas, Celebraciones'
         ]);
         $ebook12->clients()->attach($client1->id, ['authorized' => true]);

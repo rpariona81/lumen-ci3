@@ -34,7 +34,7 @@ class Auth_hooks
                     echo $this->CI->output->get_output();
                     //exit;
                 } else {
-                    print_r("No autorizado. Redirigiendo a login...");
+                    //print_r("No autorizado. Redirigiendo a login...");
                     redirect('login');
                     //echo $this->CI->output->get_output();
                 }

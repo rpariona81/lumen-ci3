@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use Illuminate\Database\Capsule\Manager as DB;
+use Illuminate\Database\Eloquent\Builder;
+
 class Welcome extends CI_Controller
 {
 
@@ -31,6 +34,7 @@ class Welcome extends CI_Controller
 		$this->load->model('Role_model');
 		$this->load->model('User_model');
 		$this->load->model('Ebook_model');
+		$this->load->model('Repository_model');
 
 		/* 
 		$users = $this->User_model::all();
@@ -70,7 +74,7 @@ class Welcome extends CI_Controller
 		print_r(json_encode($data['ebooks']));
 		*/
 
-		$search_text = 'cocina';
+		$search_text = 'GUIA';
 
 		/*
 		$query = $this->Ebook_model::whereHas('clients', function ($q) {
@@ -97,9 +101,42 @@ class Welcome extends CI_Controller
 		print_r(json_encode($data['ebooks_client']));
 		*/
 
-		$datos = $this->Ebook_model::getPaginateSearchBooks(2, 2, $search_text, 1);
+		/** ver cantidad filtrada */
+		//$datos = $this->Ebook_model::with('clients')->where('clients[0]->id', 1)->get();
+		//$i = 1;
+		
+		//$datos = $this->Ebook_model::();
+		/*foreach ($datos as $client) {
+			echo "ebook " . $client->ebook_title;
+			//echo "client " . $client->clients[$i]->client_name;
+			//$i = $i++;
+		}*/
+		//print_r(json_encode($datos));
+		/*$datos1 = DB::table('t_ebooks')
+						->select('id','ebook_code','ebook_isbn')
+						->where('id', 'IN', '(select ebook_id from t_client_ebook where client_id=1)')
+						->get();*/
+						/*->leftjoin('t_clients','t_client_ebook.client_id','=','t_clients.id')
+						->leftJoin('t_ebooks','t_client_ebook.ebook_id','=','t_ebooks.id')
+						->where('t_client_ebook.client_id','=',1)
+						->get();*/
+		//$cant_datos = $this->Ebook_model::getCantSearchEbooks($search_text, 1);
+		$client_id = '1';
+		/*$datos1 = $this->Ebook_model::whereIn('id', function ($query) use ($client_id){
+			$query->select('ebook_id')
+					->from('t_client_ebook')
+					->where('client_id','=',$client_id);
+		})->select('id','ebook_code','ebook_isbn')->get();
+		print_r(json_encode($datos1));*/
+
+		$datos2 = $this->Repository_model::where('client_id','=', $client_id)->get();
+		print_r(json_encode($datos2));
+		//print_r($datos1->count());
+		/* filtro de libros
+		$datos = $this->Ebook_model::getPaginateSearchBooks(4, 2, $search_text, 1);
 		$data['ebooks_client'] = $datos;
 		print_r(json_encode($data['ebooks_client']));
+		*/
 	}
 
 	public function testlogin()

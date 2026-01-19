@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Faker\Generator;
 
 use App\Models\Client;
 use App\Models\Repository;
@@ -15,7 +16,7 @@ class RepoClientSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Generator $faker)
     {
         //
         $client1 = Client::where('client_name', 'Client 01')->first();
@@ -24,6 +25,8 @@ class RepoClientSeeder extends Seeder
 
         $repo1 = Repository::create([
             'client_id' => $client1->id,
+            'repo_code' => $faker->isbn10(),
+            'repo_isbn' => $faker->isbn13(),
             'repo_title' => 'Guia Del Estudiante Pasteleria',
             'repo_display' => 'Pastelería - Guía Del Estudiante',
             'repo_type' => 'Ebook',
@@ -45,6 +48,8 @@ class RepoClientSeeder extends Seeder
 
         $repo2 = Repository::create([
             'client_id' => $client2->id,
+            'repo_code' => $faker->isbn10(),
+            'repo_isbn' => $faker->isbn13(),
             'repo_title' => 'Manual de Cocina Saludable',
             'repo_display' => 'Cocina Saludable - Manual',
             'repo_type' => 'Ebook',
@@ -66,6 +71,8 @@ class RepoClientSeeder extends Seeder
 
         $repo3 = Repository::create([
             'client_id' => $client3->id,
+            'repo_code' => $faker->isbn10(),
+            'repo_isbn' => $faker->isbn13(),
             'repo_title' => 'Técnicas de Repostería Moderna',
             'repo_display' => 'Repostería Moderna - Técnicas',
             'repo_type' => 'Ebook',

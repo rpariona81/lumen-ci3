@@ -15,6 +15,8 @@ class Repository_Model extends MY_Model
 
     protected $fillable = [
         'client_id',
+        'repo_code',
+        'repo_isbn',
         'repo_title',
         'repo_display',
         'repo_type',

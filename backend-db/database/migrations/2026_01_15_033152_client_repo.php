@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('t_client_repository', function (Blueprint $table) {
             $table->bigIncrements('id'); // client_ebook id
-            $table->unsignedBigInteger('client_id');
+            $table->string('repo_code')->nullable()->unique();
+            $table->string('repo_isbn')->nullable()->unique();
             $table->string('repo_title')->nullable();
+            $table->string('repo_alias')->nullable();
             $table->string('repo_display')->nullable();
             $table->string('repo_type')->nullable();
             $table->string('repo_format')->nullable();
@@ -31,7 +33,9 @@ return new class extends Migration
             $table->string('repo_categories')->nullable();
             $table->string('repo_tags')->nullable();
             $table->boolean('repo_available')->default(true);
+            $table->unsignedBigInteger('client_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
