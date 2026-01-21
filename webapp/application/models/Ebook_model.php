@@ -90,7 +90,7 @@ class Ebook_Model extends MY_Model
 			->orWhere('ebook_tags', 'LIKE', '%' . $search_text . '%')
 			->orWhere('ebook_display', 'LIKE', '%' . $search_text . '%')
 			->whereHas('clients', function ($q) use ($client_id) {
-				$q->where('client_ida', '=', $client_id)
+				$q->where('client_id', '=', $client_id)
 					->where('authorized', '=', 1);
 			})->skip($skip)->take($take)->get();
 		//$data['ebooks_client'] = $results;
