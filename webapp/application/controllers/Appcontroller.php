@@ -13,6 +13,7 @@ class AppController extends CI_Controller
         $this->load->model('Client_model');
         $this->load->model('Repository_model');
         $this->load->model('Ebook_model');
+        $this->load->model('Viewebook_model');
         $this->load->library('pagination');
     }
 
@@ -111,11 +112,28 @@ class AppController extends CI_Controller
         }
     }
 
-    public function view_ebook()
+    public function addViewEbook()
     {
-        
+        if ($this->input->is_ajax_request()) {
+            $user_id = $this->session->userdata('Email') ? $this->User_model->where('email', $this->session->userdata('Email'))->first()->id : null;
+            $client_id = $this->session->userdata('Client') ? $this->Client_model->where('client_name', $this->session->userdata('Client'))->first()->id : null;
+            try {
+                if (isset($user_id) && isset($client_id)) {
+                    $data['user_id'] = $user_id;
+                    $data['client_id'] = $client_id;
+                    $data['ebook_id'] = $this->input->post('book_id', true);
+                    $model = new Viewebook_model();
+                    $model->fill($data);
+                    $model->save($data);
+                }
+            } catch (\Throwable $th) {
+                $this->session->set_flashdata('error', 'No es posible registrar');
+                redirect_back();
+            }
+        }
     }
 }
+
 
 
 

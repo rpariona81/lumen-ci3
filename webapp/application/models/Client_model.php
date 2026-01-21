@@ -10,13 +10,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Client_Model extends MY_Model
 {
 	use HasFactory;
-	
+
 	protected $table = 't_clients';
 
 	protected $fillable = [
 		'client_ruc_uid',
 		'client_email',
-        'client_name',
+		'client_name',
 		'client_logo',
 		'client_verified_at',
 		'client_display',
@@ -31,19 +31,19 @@ class Client_Model extends MY_Model
 	 * @var array
 	 */
 
-    public function users()
-    {
-		return $this->hasMany(User_model::class,'client_id','id');
-    }
+	public function users()
+	{
+		return $this->hasMany(User_model::class, 'client_id', 'id');
+	}
 
 	public function ebooks()
-    {
-        return $this->belongsToMany(Ebook_model::class, 't_client_ebook', 'ebook_id', 'client_id')
-                    ->withPivot('authorized')
-                    ->withTimestamps();
-    }
-	
-    //protected $with = ['users'];
+	{
+		return $this->belongsToMany(Ebook_model::class, 't_client_ebook', 'ebook_id', 'client_id')
+			->withPivot('authorized', 'client_ebook_tags', 'client_ebook_categories')
+			->withTimestamps();
+	}
+
+	//protected $with = ['users'];
 
 	/*public function getUsersClient($client_id = null)
 	{

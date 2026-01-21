@@ -17,6 +17,8 @@ return new class extends Migration
             $table->bigIncrements('id'); // client_ebook id
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('ebook_id');
+            $table->string('client_ebook_categories')->nullable();
+            $table->string('client_ebook_tags')->nullable();
             $table->boolean('authorized')->default(true);
             $table->timestamps();
         });

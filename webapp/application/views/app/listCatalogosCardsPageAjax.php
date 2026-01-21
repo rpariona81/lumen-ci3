@@ -76,7 +76,8 @@ function verLibro(info, label, book_id) {
     let titulo = info;
     $('.modal-title').html(titulo);
     if (!(label == '')) {
-        var url = "<?= base_url('uploads/pdf/') ?>" + label;
+        //var url = "< ?= base_url('uploads/pdf/') ?>" + label;
+        var url = label;
         var options = {
             fallbackLink: "<p>Este navegador no soporta PDFs en línea, puede descargar el libro desde <a href='" +
                 url + "'>este enlace</a></p>"

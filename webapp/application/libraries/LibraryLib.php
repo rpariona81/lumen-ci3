@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 use Illuminate\Support\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class LibraryLib
 {
@@ -21,8 +22,14 @@ class LibraryLib
         $this->ci->load->library('session');
     }
 
+    public function selectEbook($id = null)
+    {
+        
+    }
+
     public function countEbooksFind($search_text = NULL, $client_id = NULL)
     {
+        /*
         $firstLoad = $this->ci->Ebook_model::whereIn('id', function ($query) use ($client_id) {
             $query->select('ebook_id')
                 ->from('t_client_ebook')
@@ -50,7 +57,35 @@ class LibraryLib
         })->get();
 
         $results = $firstLoad->merge($secondLoad);
+        */
 
+        $firstLoad = DB::table('t_client_ebook')
+            ->leftjoin('t_ebooks', 't_client_ebook.ebook_id', '=', 't_ebooks.id')
+            ->where('t_client_ebook.client_id', '=', $client_id)
+            ->where(function ($query) use ($search_text) {
+                $query->where('ebook_title', 'LIKE', '%' . $search_text . '%')
+                    ->orWhere('ebook_author', 'LIKE', '%' . $search_text . '%')
+                    ->orWhere('ebook_code', 'LIKE', '%' . $search_text . '%')
+                    ->orWhere('ebook_isbn', 'LIKE', '%' . $search_text . '%')
+                    ->orWhere('ebook_editorial', 'LIKE', '%' . $search_text . '%')
+                    ->orWhere('client_ebook_tags', 'LIKE', '%' . $search_text . '%')
+                    ->orWhere('ebook_display', 'LIKE', '%' . $search_text . '%');
+            })
+            ->get();
+
+        $secondLoad = $this->ci->Repository_model::where(function ($query) use ($client_id) {
+            $query->where('client_id', '=', $client_id);
+        })->where(function ($query) use ($search_text) {
+            $query->where('repo_title', 'LIKE', '%' . $search_text . '%')
+                ->orWhere('repo_author', 'LIKE', '%' . $search_text . '%')
+                ->orWhere('repo_code', 'LIKE', '%' . $search_text . '%')
+                ->orWhere('repo_isbn', 'LIKE', '%' . $search_text . '%')
+                ->orWhere('repo_editorial', 'LIKE', '%' . $search_text . '%')
+                ->orWhere('repo_tags', 'LIKE', '%' . $search_text . '%')
+                ->orWhere('repo_display', 'LIKE', '%' . $search_text . '%');
+        })->get();
+
+        $results = $firstLoad->merge($secondLoad);
         return $results->count();
     }
 
@@ -59,7 +94,7 @@ class LibraryLib
     {
         //$client_id = $this->ci->session->userdata('Client') ? $this->ci->Client_model->where('client_name', $this->ci->session->userdata('Client'))->first()->id : null;
 
-        $firstLoad = $this->ci->Ebook_model::whereIn('id', function ($query) use ($client_id) {
+        /*$firstLoad = $this->ci->Ebook_model::whereIn('id', function ($query) use ($client_id) {
             $query->select('ebook_id')
                 ->from('t_client_ebook')
                 ->where('client_id', '=', $client_id);
@@ -91,7 +126,43 @@ class LibraryLib
             'ebook_format',
             'ebook_details',
             'ebook_categories',
-            'ebook_tags')
+            'ebook_tags'
+        )
+            ->get();*/
+
+        $firstLoad = DB::table('t_client_ebook')
+            ->leftjoin('t_ebooks', 't_client_ebook.ebook_id', '=', 't_ebooks.id')
+            ->where('t_client_ebook.client_id', '=', $client_id)
+            ->where(function ($query) use ($search_text) {
+                $query->where('ebook_title', 'LIKE', '%' . $search_text . '%')
+                    ->orWhere('ebook_author', 'LIKE', '%' . $search_text . '%')
+                    ->orWhere('ebook_code', 'LIKE', '%' . $search_text . '%')
+                    ->orWhere('ebook_isbn', 'LIKE', '%' . $search_text . '%')
+                    ->orWhere('ebook_editorial', 'LIKE', '%' . $search_text . '%')
+                    ->orWhere('client_ebook_tags', 'LIKE', '%' . $search_text . '%')
+                    ->orWhere('ebook_display', 'LIKE', '%' . $search_text . '%');
+            })->select(
+                't_ebooks.id',
+                't_ebooks.ebook_code',
+                't_ebooks.ebook_isbn',
+                't_ebooks.ebook_title',
+                't_ebooks.ebook_alias',
+                't_ebooks.ebook_display',
+                't_ebooks.ebook_type',
+                't_ebooks.ebook_author',
+                't_ebooks.ebook_editorial',
+                't_ebooks.ebook_year',
+                't_ebooks.ebook_pages',
+                't_ebooks.ebook_front_page',
+                't_ebooks.ebook_url',
+                't_ebooks.ebook_file',
+                't_ebooks.catalog_id',
+                't_ebooks.ebook_available',
+                't_ebooks.ebook_format',
+                't_ebooks.ebook_details',
+                't_ebooks.ebook_categories',
+                't_client_ebook.client_ebook_tags as ebook_tags'
+            )
             ->get();
 
         $secondLoad = $this->ci->Repository_model::where(function ($query) use ($client_id) {
@@ -124,7 +195,8 @@ class LibraryLib
             'repo_format as ebook_format',
             'repo_details as ebook_details',
             'repo_categories as ebook_categories',
-            'repo_tags as ebook_tags')
+            'repo_tags as ebook_tags'
+        )
             ->get();
 
         //$results = $firstLoad->merge($secondLoad);

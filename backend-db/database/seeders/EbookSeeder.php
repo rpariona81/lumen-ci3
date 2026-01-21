@@ -35,8 +35,8 @@ class EbookSeeder extends Seeder
             'ebook_file' => 'GUIA_DEL_ESTUDIANTE_PASTELERIA.pdf',
             'ebook_tags' => 'Pastelería, Cocina, Repostería'
         ]);
-        $ebook1->clients()->attach($client1->id, ['authorized' => true]);
-        $ebook1->clients()->attach($client2->id, ['authorized' => true]);
+        $ebook1->clients()->attach($client1->id, ['authorized' => true, 'client_ebook_tags' => 'Arquitectura de Plataformas y Servicios de Tecnologías de la Información']);
+        $ebook1->clients()->attach($client2->id, ['authorized' => true, 'client_ebook_tags' => 'Desarrollo de Sistemas de Información']);
         $ebook1->save();
 
         $ebook2 = Ebook::create([
@@ -52,9 +52,9 @@ class EbookSeeder extends Seeder
             'ebook_file' => 'MANUAL_DE_COCINA_SALUDABLE.epub',
             'ebook_tags' => 'Cocina Saludable, Nutrición, Bienestar'
         ]);
-        $ebook2->clients()->attach($client1->id, ['authorized' => true]);
-        $ebook2->clients()->attach($client2->id, ['authorized' => true]);
-        $ebook2->clients()->attach($client3->id, ['authorized' => true]);
+        $ebook2->clients()->attach($client1->id, ['authorized' => true, 'client_ebook_tags' => 'Enfermería Técnica']);
+        $ebook2->clients()->attach($client2->id, ['authorized' => true, 'client_ebook_tags' => 'Enfermería Técnica']);
+        $ebook2->clients()->attach($client3->id, ['authorized' => true, 'client_ebook_tags' => 'Enfermería Técnica']);
         $ebook2->save();
 
         $ebook3 = Ebook::create([
@@ -70,8 +70,8 @@ class EbookSeeder extends Seeder
             'ebook_file' => 'TECNICAS_DE_REPOSTERIA_MODERNA.pdf',
             'ebook_tags' => 'Repostería, Técnicas, Cocina'
         ]);
-        $ebook3->clients()->attach($client2->id, ['authorized' => true]);
-        $ebook3->clients()->attach($client3->id, ['authorized' => true]);
+        $ebook3->clients()->attach($client2->id, ['authorized' => true, 'client_ebook_tags' => 'Enfermería Técnica']);
+        $ebook3->clients()->attach($client3->id, ['authorized' => true, 'client_ebook_tags' => 'Enfermería Técnica']);
         $ebook3->save();
 
         $ebook4 = Ebook::create([
@@ -87,8 +87,8 @@ class EbookSeeder extends Seeder
             'ebook_file' => 'COCINA_INTERNACIONAL_PARA_PRINCIPIANTES.epub',
             'ebook_tags' => 'Cocina Internacional, Cocina, Recetas'
         ]);
-        $ebook4->clients()->attach($client1->id, ['authorized' => true]);
-        $ebook4->clients()->attach($client2->id, ['authorized' => true]);
+        $ebook4->clients()->attach($client1->id, ['authorized' => true, 'client_ebook_tags' => 'Enfermería Técnica']);
+        $ebook4->clients()->attach($client2->id, ['authorized' => true, 'client_ebook_tags' => 'Enfermería Técnica']);
         $ebook4->save();
 
         $ebook5 = Ebook::create([
@@ -104,8 +104,8 @@ class EbookSeeder extends Seeder
             'ebook_file' => 'FUNDAMENTOS_DE_LA_COCINA_VEGETARIANA.pdf',
             'ebook_tags' => 'Cocina Vegetariana, Saludable, Nutrición'
         ]);
-        $ebook5->clients()->attach($client2->id, ['authorized' => true]);
-        $ebook5->clients()->attach($client3->id, ['authorized' => true]);
+        $ebook5->clients()->attach($client2->id, ['authorized' => true, 'client_ebook_tags' => 'Enfermería Técnica']);
+        $ebook5->clients()->attach($client3->id, ['authorized' => true, 'client_ebook_tags' => 'Farmacia Técnica']);
         $ebook5->save();
 
         $ebook6 = Ebook::create([
@@ -121,8 +121,8 @@ class EbookSeeder extends Seeder
             'ebook_file' => 'POSTRES_Y_DULCES_TRADICIONALES.epub',
             'ebook_tags' => 'Postres, Dulces, Repostería'
         ]);
-        $ebook6->clients()->attach($client1->id, ['authorized' => true]);
-        $ebook6->clients()->attach($client3->id, ['authorized' => true]);
+        $ebook6->clients()->attach($client1->id, ['authorized' => true, 'client_ebook_tags' => 'Arquitectura de Plataformas y Servicios de Tecnologías de la Información']);
+        $ebook6->clients()->attach($client3->id, ['authorized' => true, 'client_ebook_tags' => 'Desarrollo de Sistemas de Información']);
         $ebook6->save();
 
         $ebook7 = Ebook::create([
@@ -138,8 +138,8 @@ class EbookSeeder extends Seeder
             'ebook_file' => 'COCINA_RAPIDA_Y_FACIL_PARA_TODOS.pdf',
             'ebook_tags' => 'Cocina Rápida, Fácil, Recetas'
         ]);
-        $ebook7->clients()->attach($client1->id, ['authorized' => true]);
-        $ebook7->clients()->attach($client3->id, ['authorized' => true]);
+        $ebook7->clients()->attach($client1->id, ['authorized' => true, 'client_ebook_tags' => 'Arquitectura de Plataformas y Servicios de Tecnologías de la Información']);
+        $ebook7->clients()->attach($client3->id, ['authorized' => true, 'client_ebook_tags' => 'Desarrollo de Sistemas de Información']);
         $ebook7->save();
 
         $ebook8 = Ebook::create([
@@ -155,8 +155,8 @@ class EbookSeeder extends Seeder
             'ebook_file' => 'COCINA_GOURMET_PARA_OCASIONES_ESPECIALES.epub',
             'ebook_tags' => 'Cocina Gourmet, Lujo, Recetas'
         ]);
-        $ebook8->clients()->attach($client2->id, ['authorized' => true]);
-        $ebook8->clients()->attach($client3->id, ['authorized' => true]);
+        $ebook8->clients()->attach($client2->id, ['authorized' => true, 'client_ebook_tags' => 'Enfermería Técnica']);
+        $ebook8->clients()->attach($client3->id, ['authorized' => true, 'client_ebook_tags' => 'Farmacia Técnica']);
         $ebook8->save();
 
         $ebook9 = Ebook::create([
@@ -172,8 +172,8 @@ class EbookSeeder extends Seeder
             'ebook_file' => 'COCINA_INTERNACIONAL_AVANZADA.pdf',
             'ebook_tags' => 'Cocina Internacional, Avanzada, Recetas'
         ]);
-        $ebook9->clients()->attach($client2->id, ['authorized' => true]);
-        $ebook9->clients()->attach($client3->id, ['authorized' => true]);
+        $ebook9->clients()->attach($client2->id, ['authorized' => true, 'client_ebook_tags' => 'Enfermería Técnica']);
+        $ebook9->clients()->attach($client3->id, ['authorized' => true, 'client_ebook_tags' => 'Farmacia Técnica']);
         $ebook9->save();
 
         $ebook10 = Ebook::create([
@@ -189,9 +189,9 @@ class EbookSeeder extends Seeder
             'ebook_file' => 'TECNICAS_DE_COCINA_PROFESIONAL.epub',
             'ebook_tags' => 'Cocina Profesional, Técnicas, Gastronomía'
         ]);
-        $ebook10->clients()->attach($client1->id, ['authorized' => true]);
-        $ebook10->clients()->attach($client2->id, ['authorized' => true]);
-        $ebook10->clients()->attach($client3->id, ['authorized' => true]);
+        $ebook10->clients()->attach($client1->id, ['authorized' => true, 'client_ebook_tags' => 'Enfermería Técnica']);
+        $ebook10->clients()->attach($client2->id, ['authorized' => true, 'client_ebook_tags' => 'Farmacia Técnica']);
+        $ebook10->clients()->attach($client3->id, ['authorized' => true, 'client_ebook_tags' => 'Laboratorio Clínico']);
         $ebook10->save();
 
         $ebook11 = Ebook::create([
@@ -207,8 +207,8 @@ class EbookSeeder extends Seeder
             'ebook_file' => 'COCINA_SALUDABLE_PARA_NINOS.pdf',
             'ebook_tags' => 'Cocina Saludable, Niños, Nutrición'
         ]);
-        $ebook11->clients()->attach($client1->id, ['authorized' => true]);
-        $ebook11->clients()->attach($client2->id, ['authorized' => true]);
+        $ebook11->clients()->attach($client1->id, ['authorized' => true, 'client_ebook_tags' => 'Enfermería Técnica']);
+        $ebook11->clients()->attach($client2->id, ['authorized' => true, 'client_ebook_tags' => 'Farmacia Técnica']);
         $ebook11->save();
 
         $ebook12 = Ebook::create([
@@ -224,9 +224,9 @@ class EbookSeeder extends Seeder
             'ebook_file' => 'REPOSTERIA_CREATIVA_PARA_FIESTAS.epub',
             'ebook_tags' => 'Repostería Creativa, Fiestas, Celebraciones'
         ]);
-        $ebook12->clients()->attach($client1->id, ['authorized' => true]);
-        $ebook12->clients()->attach($client2->id, ['authorized' => true]);
-        $ebook12->clients()->attach($client3->id, ['authorized' => true]);
+        $ebook12->clients()->attach($client1->id, ['authorized' => true, 'client_ebook_tags' => 'Enfermería Técnica']);
+        $ebook12->clients()->attach($client2->id, ['authorized' => true, 'client_ebook_tags' => 'Farmacia Técnica']);
+        $ebook12->clients()->attach($client3->id, ['authorized' => true, 'client_ebook_tags' => 'Laboratorio Clínico']);
         $ebook12->save();
 
     }

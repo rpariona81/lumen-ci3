@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Ebook_Model extends MY_Model
 {
     use HasFactory;
-    
-	protected $table = "t_ebooks";
+
+    protected $table = "t_ebooks";
 
     protected $fillable = [
         'ebook_code',
@@ -55,8 +55,8 @@ class Ebook_Model extends MY_Model
     public function clients()
     {
         return $this->belongsToMany(Client_model::class, 't_client_ebook', 'ebook_id', 'client_id')
-                    ->withPivot('authorized')
-                    ->withTimestamps();
+            ->withPivot('authorized', 'client_ebook_tags', 'client_ebook_categories')
+            ->withTimestamps();
     }
 
     public function catalog()
@@ -69,33 +69,32 @@ class Ebook_Model extends MY_Model
         //$query = Ebook_model::query();
 
         $results = Ebook_model::where('ebook_title', 'LIKE', '%' . $search_text . '%')
-			->orWhere('ebook_author', 'LIKE', '%' . $search_text . '%')
-			->orWhere('ebook_editorial', 'LIKE', '%' . $search_text . '%')
-			->orWhere('ebook_tags', 'LIKE', '%' . $search_text . '%')
-			->orWhere('ebook_display', 'LIKE', '%' . $search_text . '%')
-			->whereHas('clients', function ($q) use ($client_id) {
-				$q->where('client_id', '=', $client_id)
-					->where('authorized', '=', 1);
-			})->get();
-		//$data['ebooks_client'] = $results;
+            ->orWhere('ebook_author', 'LIKE', '%' . $search_text . '%')
+            ->orWhere('ebook_editorial', 'LIKE', '%' . $search_text . '%')
+            ->orWhere('ebook_tags', 'LIKE', '%' . $search_text . '%')
+            ->orWhere('ebook_display', 'LIKE', '%' . $search_text . '%')
+            ->whereHas('clients', function ($q) use ($client_id) {
+                $q->where('client_id', '=', $client_id)
+                    ->where('authorized', '=', 1);
+            })->get();
+        //$data['ebooks_client'] = $results;
 
         return $results->count();
-    }   
+    }
 
     public static function getPaginateSearchBooks($skip = NULL, $take = NULL, $search_text = NULL, $client_id = NULL)
     {
         $results = Ebook_model::where('ebook_title', 'LIKE', '%' . $search_text . '%')
-			->orWhere('ebook_author', 'LIKE', '%' . $search_text . '%')
-			->orWhere('ebook_editorial', 'LIKE', '%' . $search_text . '%')
-			->orWhere('ebook_tags', 'LIKE', '%' . $search_text . '%')
-			->orWhere('ebook_display', 'LIKE', '%' . $search_text . '%')
-			->whereHas('clients', function ($q) use ($client_id) {
-				$q->where('client_id', '=', $client_id)
-					->where('authorized', '=', 1);
-			})->skip($skip)->take($take)->get();
-		//$data['ebooks_client'] = $results;
+            ->orWhere('ebook_author', 'LIKE', '%' . $search_text . '%')
+            ->orWhere('ebook_editorial', 'LIKE', '%' . $search_text . '%')
+            ->orWhere('ebook_tags', 'LIKE', '%' . $search_text . '%')
+            ->orWhere('ebook_display', 'LIKE', '%' . $search_text . '%')
+            ->whereHas('clients', function ($q) use ($client_id) {
+                $q->where('client_id', '=', $client_id)
+                    ->where('authorized', '=', 1);
+            })->skip($skip)->take($take)->get();
+        //$data['ebooks_client'] = $results;
 
         return $results;
     }
-
 }

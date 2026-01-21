@@ -159,37 +159,87 @@ class Welcome extends CI_Controller
 		$this->load->model('User_model');
 		$this->load->model('Ebook_model');
 		$this->load->model('Repository_model');
-		$client_id = 1;
-		$search_text = '';
+
 		// First Query: Select columns from the 'payments' table
-		$payments = $this->Ebook_model::whereIn('id', function ($query) use ($client_id) {
-			$query->select('ebook_id')
+		/* $payments = $this->Ebook_model::whereIn('id', function ($query) use ($client_id) {
+			$query->select('ebook_id','client_ebook_tags as ebook_tags')
 				->from('t_client_ebook')
 				->where('client_id', '=', $client_id);
 		})->where(function ($query) use ($search_text) {
-			$query->select('id', 'ebook_code', 'ebook_isbn', 'ebook_isbn', 'ebook_title', 'ebook_alias', 'ebook_display')
-				->where('ebook_title', 'LIKE', '%' . $search_text . '%')
+			$query->where('ebook_title', 'LIKE', '%' . $search_text . '%')
 				->orWhere('ebook_author', 'LIKE', '%' . $search_text . '%')
 				->orWhere('ebook_editorial', 'LIKE', '%' . $search_text . '%')
 				->orWhere('ebook_tags', 'LIKE', '%' . $search_text . '%')
 				->orWhere('ebook_display', 'LIKE', '%' . $search_text . '%');
-		})
-			->get();
+		})->select(
+            'id',
+            'ebook_code',
+            'ebook_isbn',
+            'ebook_title',
+            'ebook_alias',
+            'ebook_display',
+            'ebook_type',
+            'ebook_author',
+            'ebook_editorial',
+            'ebook_year',
+            'ebook_pages',
+            'ebook_front_page',
+            'ebook_url',
+            'ebook_file',
+            'catalog_id',
+            'ebook_available',
+            'ebook_format',
+            'ebook_details',
+            'ebook_categories',
+            'ebook_tags')
+            ->get(); */
+
+		$client_id = 3;
+		$search_text = 'sistema';
+		/*$payments = $this->Ebook_model::with('clients')->whereIn('id',function ($query) use ($client_id) {
+			$query->select('ebook_id')
+				->from('t_client_ebook')
+				->where('client_id', '=', $client_id);		//->where('client_id', '=', $client_id);
+		})/*->where(function ($query) use ($search_text){
+			$query->wherePivot('client_ebook_tags','LIKE','%'.$search_text.'%');
+		})*/
+
+		$payments = $this->Ebook_model::with('clients')->where('clients[0]->id',1)->get();
+
+		//$payments = $this->Ebook_model::with('clients')->get();
+
+		/*$payments = $this->Ebook_model::whereIn('id', function ($query) use ($client_id) {
+			$query->select('ebook_id')
+				->from('t_client_ebook')
+				->where('client_id', '=', $client_id);		//->where('client_id', '=', $client_id);
+		})->whereHas('clients', function ($query) use ($search_text) {
+			$query->where('client_ebook_tags', 'LIKE', '%' . $search_text . '%');
+		})->get();*/
+
+		/*$payments = $this->Ebook_model::whereHas('clients', function ($query) use ($search_text) {
+			$query//->where('client_ebook_tags', 'LIKE', '%' . $search_text . '%')
+			->where('client_id','=',1);
+		})->get();*/
+
+		/*$payments = $this->Ebook_model::whereHas('clients', function ($query) use ($client_id){
+			$query->where('client_id','=',$client_id);
+		})->with('clients')->get();*/
 
 		/*$payments = $this->Ebook_model::whereIn('id', function ($query) use ($client_id) {
 			$query->select('ebook_id')
 				->from('t_client_ebook')
 				->where('client_id', '=', $client_id);
-		})->select('id', 'ebook_code', 'ebook_isbn', 'ebook_isbn', 'ebook_title', 'ebook_alias', 'ebook_display')
+		})
 			->where('ebook_title', 'LIKE', '%' . $search_text . '%')
 			->orWhere('ebook_author', 'LIKE', '%' . $search_text . '%')
 			->orWhere('ebook_editorial', 'LIKE', '%' . $search_text . '%')
 			->orWhere('ebook_tags', 'LIKE', '%' . $search_text . '%')
 			->orWhere('ebook_display', 'LIKE', '%' . $search_text . '%')
+			->select('id', 'ebook_code', 'ebook_isbn', 'ebook_isbn', 'ebook_title', 'ebook_alias', 'ebook_display', 'ebook_tags')
 			->get();
 			*/
 
-		//print_r(json_encode($payments));
+		print_r(json_encode($payments));
 
 		// Second Query: Select matching columns from the 'expenses' table
 		// Use DB::raw("'' as ...") to create empty columns to match the first query's structure
@@ -202,7 +252,7 @@ class Welcome extends CI_Controller
 			->orWhere('repo_display', 'LIKE', '%' . $search_text . '%')
 			->get();*/
 
-		$expenses = $this->Repository_model::where(function ($query) use ($client_id) {
+		/* $expenses = $this->Repository_model::where(function ($query) use ($client_id) {
 			$query->where('client_id', '=', $client_id);
 		})->where(function ($query) use ($search_text) {
 			$query->where('repo_title', 'LIKE', '%' . $search_text . '%')
@@ -210,19 +260,40 @@ class Welcome extends CI_Controller
 				->orWhere('repo_editorial', 'LIKE', '%' . $search_text . '%')
 				->orWhere('repo_tags', 'LIKE', '%' . $search_text . '%')
 				->orWhere('repo_display', 'LIKE', '%' . $search_text . '%');
-		})->select('id', 'repo_code as ebook_code', 'repo_isbn as ebook_isbn', 'repo_title as ebook_title', 'repo_alias as ebook_alias', 'repo_display as ebook_display')
+		})->select(
+			'id', 
+			'repo_code as ebook_code',
+            'repo_isbn as ebook_isbn',
+            'repo_title as ebook_title',
+            'repo_alias as ebook_alias',
+            'repo_display as ebook_display',
+            'repo_type as ebook_type',
+            'repo_author as ebook_author',
+            'repo_editorial as ebook_editorial',
+            'repo_year as ebook_year',
+            'repo_pages as ebook_pages',
+            'repo_front_page as ebook_front_page',
+            'repo_url as ebook_url',
+            'repo_file as ebook_file',
+            'client_id as catalog_id',
+            'repo_available as ebook_available',
+            'repo_format as ebook_format',
+            'repo_details as ebook_details',
+            'repo_categories as ebook_categories',
+            'repo_tags as ebook_tags',
+			)
 			->get();
-
+ */
 		//print_r(json_encode($expenses));
 
-		$collected  = $payments->merge($expenses);
+		//$collected  = $payments->merge($expenses);
 		//$currentPage = LengthAwarePaginator::resolveCurrentPage();
-		$currentPage = 1;
-		$perPage = 3;
-		$currentPageItems = $collected->slice(($currentPage * $perPage) - $perPage, $perPage)->values();
+		//$currentPage = 1;
+		//$perPage = 3;
+		//$currentPageItems = $collected->slice(($currentPage * $perPage) - $perPage, $perPage)->values();
 
 		//print_r(json_encode($results->count()));
-		print_r(json_encode($currentPageItems));
+		//print_r(json_encode($currentPageItems));
 
 		// Combine the two queries using unionAll()
 		//$results = $payments->unionAll($expenses)
