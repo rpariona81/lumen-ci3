@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('t_client_repository', function (Blueprint $table) {
-            $table->bigIncrements('id'); // client_ebook id
+            $table->bigIncrements('id')->startingValue(10000001); // client_ebook id
             $table->string('repo_code')->nullable()->unique();
             $table->string('repo_isbn')->nullable()->unique();
             $table->string('repo_title')->nullable();
@@ -32,6 +32,7 @@ return new class extends Migration
             $table->string('repo_file')->nullable();
             $table->string('repo_categories')->nullable();
             $table->string('repo_tags')->nullable();
+            $table->string('repo_size')->nullable();
             $table->boolean('repo_available')->default(true);
             $table->unsignedBigInteger('client_id')->nullable();
             $table->timestamps();

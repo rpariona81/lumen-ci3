@@ -73,4 +73,7 @@ $route['user'] = 'appcontroller/index';
 $route['user/catalog'] = 'appcontroller/view_cards';
 $route['user/catalog/(:num)'] = 'appcontroller/view_cards/$1';
 
+$route['user/ebooks'] = 'appcontroller/view_ebookcards';
+$route['user/ebooks/(:num)'] = 'appcontroller/view_ebookcards/$1';
+
 $route['admin'] = 'admincontroller/index';

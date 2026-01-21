@@ -46,7 +46,7 @@
                     <!-- <input type="hidden" id="book_id" name="book_id" value="<?= $item->id ?>"> -->
 
                     <button type="button" id="btn-show-ebook"
-                        onclick="verLibro('<?= $item->ebook_display ?>','<?= $item->ebook_file ?>','<?= $item->id ?>')"
+                        onclick="verLibro('<?= $item->ebook_display ?>','<?= $item->ebook_url ?>','<?= $item->id ?>')"
                         class="align-self-end btn btn-lg btn-block btn-danger" style="margin-top: auto;"
                         data-bs-toggle="modal" data-bs-target="#modal_ebook">
                         <strong>Ver libro</strong>
@@ -82,8 +82,8 @@ function verLibro(info, label, book_id) {
                 url + "'>este enlace</a></p>"
         };
 
-        PDFObject.embed("<?= base_url('uploads/pdf/') ?>" + label, "#my-pdf", options);
-        /*jQuery.post("<?= base_url('appcontroller/addViewEbook/') ?>", {
+        PDFObject.embed(label , "#my-pdf", options);
+        /*jQuery.post("< ?= base_url('appcontroller/addViewEbook/') ?>", {
             "book_id": book_id
         })*/
         $.post("<?= base_url('user/addview') ?>", {
