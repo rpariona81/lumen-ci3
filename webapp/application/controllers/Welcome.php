@@ -152,6 +152,36 @@ class Welcome extends CI_Controller
 		*/
 	}
 
+	public function verUserSinAdmin()
+	{
+		$this->load->model('Client_model');
+		$this->load->model('Role_model');
+		$this->load->model('User_model');
+		$this->load->model('Ebook_model');
+		$this->load->model('Repository_model');
+		//$datos = $this->User_model::with('roles')->where('id',1)->get();
+		//print_r(json_encode($datos[0]['roles'][0]['guard_name']));
+		/*$datos = $this->User_model::with('roles')
+			->whereHas('t_roles',function ($query){
+				$query->where('t_roles.guard_name','=','user');
+			})->get();
+			*/
+		// Retrieve all authors, but only eager load the 'active' books for each author
+		/*$datos = $this->User_model::with(['roles' => function ($query) {
+			$query->where('guard_name', '=', 'user');
+		}])->where('client_id', '=', 1)->get();*/
+		/*return
+		[{"id":1,"firstname":"Rey","lastname":"Leannon","email":"userdemo@demo.com","username":"userdemo","avatar":null,"email_verified_at":null,"email_subscribed":1,"enabled":false,"last_login_at":"2026-01-22 15:36:48","last_login_ip":"127.0.0.1","client_id":1,"created_at":"2026-01-22T19:59:04.000000Z","updated_at":"2026-01-22T22:20:13.000000Z","userflag":"Suspendido","roles":[{"id":6,"rolename":"user","roledisplay":"Usuario","guard_name":"user","available":1,"created_at":"2026-01-22T19:59:03.000000Z","updated_at":"2026-01-22T19:59:03.000000Z","pivot":{"user_id":1,"role_id":6}}]},{"id":2,"firstname":"Lenny","lastname":"Stamm","email":"admin@demo.com","username":"admin","avatar":null,"email_verified_at":null,"email_subscribed":1,"enabled":true,"last_login_at":"2026-01-22 17:03:22","last_login_ip":"127.0.0.1","client_id":1,"created_at":"2026-01-22T19:59:04.000000Z","updated_at":"2026-01-22T22:03:22.000000Z","userflag":"Activo","roles":[]},{"id":4,"firstname":"Rasheed","lastname":"Kub","email":"user@example.com","username":"user","avatar":null,"email_verified_at":null,"email_subscribed":1,"enabled":false,"last_login_at":null,"last_login_ip":null,"client_id":1,"created_at":"2026-01-22T19:59:04.000000Z","updated_at":"2026-01-22T22:17:20.000000Z","userflag":"Suspendido","roles":[]},{"id":7,"firstname":"Roberto","lastname":"Martinez","email":"rmartinez@example.com","username":"b12d8385-ce14-465f-9861-81cc72b1c57b","avatar":null,"email_verified_at":null,"email_subscribed":1,"enabled":false,"last_login_at":null,"last_login_ip":null,"client_id":1,"created_at":"2026-01-22T21:26:26.000000Z","updated_at":"2026-01-22T21:26:26.000000Z","userflag":"Suspendido","roles":[{"id":6,"rolename":"user","roledisplay":"Usuario","guard_name":"user","available":1,"created_at":"2026-01-22T19:59:03.000000Z","updated_at":"2026-01-22T19:59:03.000000Z","pivot":{"user_id":7,"role_id":6}}]},{"id":8,"firstname":"Octavio","lastname":"Paz","email":"opaz@example.com","username":"9206a743-c09d-4aeb-8a73-3a868e4efafd","avatar":null,"email_verified_at":null,"email_subscribed":1,"enabled":true,"last_login_at":null,"last_login_ip":null,"client_id":1,"created_at":"2026-01-22T21:40:35.000000Z","updated_at":"2026-01-22T22:16:59.000000Z","userflag":"Activo","roles":[{"id":6,"rolename":"user","roledisplay":"Usuario","guard_name":"user","available":1,"created_at":"2026-01-22T19:59:03.000000Z","updated_at":"2026-01-22T19:59:03.000000Z","pivot":{"user_id":8,"role_id":6}}]}]
+		*/
+
+		$datos = DB::table('t_users')
+		->leftjoin('t_role_user','t_role_user.user_id','=','t_users.id')
+		->leftJoin('t_roles','t_roles.id','=','t_role_user.role_id')
+		->where('client_id', '=', 1)
+		->where('guard_name','=','user')->get();
+		print_r(json_encode($datos));
+	}
+
 	public function queries()
 	{
 		$this->load->model('Client_model');
@@ -204,7 +234,7 @@ class Welcome extends CI_Controller
 			$query->wherePivot('client_ebook_tags','LIKE','%'.$search_text.'%');
 		})*/
 
-		$payments = $this->Ebook_model::with('clients')->where('clients[0]->id',1)->get();
+		$payments = $this->Ebook_model::with('clients')->where('clients[0]->id', 1)->get();
 
 		//$payments = $this->Ebook_model::with('clients')->get();
 

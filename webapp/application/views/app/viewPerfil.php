@@ -18,7 +18,7 @@
                     <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
                         data-bs-target="#profile" type="button" role="tab"
                         aria-controls="profile" aria-selected="false">
-                        Credenciales
+                        Cambio de contraseña
                     </button>
                 </li>
             </ul>
@@ -54,6 +54,7 @@
                             'id' => 'email',
                             'value' => $perfil->email,
                             'placeholder' => 'Email',
+                            'disabled' => true
                         );
 
                         $change_profile = array(

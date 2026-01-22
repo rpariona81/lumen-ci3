@@ -84,3 +84,11 @@ $route['user/updateProfile'] = 'appcontroller/actualizaPerfil';
 $route['user/updatePassword'] = 'appcontroller/cambiarClave';
 
 $route['admin'] = 'admincontroller/index';
+$route['admin/users'] = 'admincontroller/verUsuarios';
+$route['admin/requests'] = 'admincontroller/verSolicitudes';
+
+$route['admin/activeUser'] = 'admincontroller/activaUser';
+$route['admin/inactiveUser'] = 'admincontroller/desactivaUser';
+
+$route['admin/activaRequest'] = 'admincontroller/activaRequest';
+$route['admin/desactivaRequest'] = 'admincontroller/desactivaRequest';

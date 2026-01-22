@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
                 OfferClientSeeder::class,
                 EbookSeeder::class,
                 RepoClientSeeder::class,
+                CareerClientSeeder::class,
                 ViewBookSeeder::class,
             ]
         );

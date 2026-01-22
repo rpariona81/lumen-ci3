@@ -158,7 +158,7 @@ class AppController extends CI_Controller
         $usuario = $this->User_model::where('email', $registro['email'])->select('id', 'enabled')->get();
         $check_user = $this->User_model::where('id', $user_id)->select('id', 'enabled')->get();
         //echo $usuario.' y user_id: '.$user_id.'....'.$check_user;
-        if ($usuario != $check_user) {
+        if ($usuario != $check_user[0]) {
             //echo json_encode($usuario);
             return FALSE;
         } else {
@@ -172,7 +172,7 @@ class AppController extends CI_Controller
         $this->form_validation->set_message('no_repetir_email', 'Existe otro registro con el mismo %s');
 
         $registro = $this->input->post();
-        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|callback_no_repetir_email');
+        $this->form_validation->set_rules('email', 'Email', 'trim|valid_email');
         $this->form_validation->set_rules('firstname', 'Nombres', 'required|min_length[2]');
         $this->form_validation->set_rules('lastname', 'Apellidos', 'required|min_length[2]');
         //si el proceso falla mostramos errores
@@ -187,26 +187,31 @@ class AppController extends CI_Controller
             date_default_timezone_set('America/Lima');
 
             if (isset($user_id)) {
-
+                $check_user = $this->User_model::where('id', $user_id)->select('firstname', 'lastname','enabled')->get();
                 $data = array(
                     'firstname' => $this->input->post('firstname', true),
                     'lastname' => $this->input->post('lastname', true),
-                    'email' => $this->input->post('email', true)
+                    //'email' => $this->input->post('email', true)
                 );
-
-                $model = $this->User_model::findOrFail($user_id);
-                //echo $registro.' true';
-                $model->fill($data);
-                $model->save($data);
-                // Display success message
-                $this->session->set_flashdata('flashSuccess', 'Actualización exitosa.');
-                redirect('/user/perfil');
+                //echo "data: ".json_encode($check_user).'-----'.$check_user[0]['firstname'];
+                if ($check_user['0']['firstname'] != $data['firstname'] || $check_user[0]['lastname'] != $data['lastname']) {
+                    $model = $this->User_model::findOrFail($user_id);
+                    //echo $registro.' true';
+                    $model->fill($data);
+                    $model->save($data);
+                    // Display success message
+                    $this->session->set_flashdata('flashSuccess', 'Actualización exitosa de datos.');
+                    redirect('/user/perfil');
+                } else {
+                    $this->session->set_flashdata('flashSuccess', 'No hay cambios.');
+                    $this->viewPerfil();
+                }
             } else {
+                $this->session->set_flashdata('flashSuccess', 'No hay cambios.');
                 $this->viewPerfil();
             }
         }
     }
-
 
     public function cambiarClave()
     {
@@ -217,7 +222,7 @@ class AppController extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             //print_r($registro);
             $this->session->set_flashdata('flashError', 'Verifique las claves ingresadas.');
-            redirect('/user/perfil#profile-tab');
+            redirect('/user/perfil');
             //en otro caso procesamos los datos
         } else {
             $user_id = $this->session->userdata('Email') ? $this->User_model->where('email', $this->session->userdata('Email'))->first()->id : null;
@@ -233,11 +238,11 @@ class AppController extends CI_Controller
                     $usuario->password = $newpassword;
                     $usuario->remember_token = base64_encode($nuevo);
                     $usuario->save();
-                    $this->session->set_flashdata('flashSuccess', 'Actualización exitosa.');
-                    redirect('/user/perfil#profile-tab', 'refresh');
+                    $this->session->set_flashdata('flashSuccess', 'Actualización exitosa de contraseña.');
+                    redirect('/user/perfil', 'refresh');
                 } else {
                     $this->session->set_flashdata('flashError', 'Verifique las claves ingresadas.');
-                    redirect('/user/perfil#profile-tab', 'refresh');
+                    redirect('/user/perfil', 'refresh');
                 }
             } else {
                 $this->session->set_flashdata('error');

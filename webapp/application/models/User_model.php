@@ -19,7 +19,7 @@ class User_Model extends MY_Model
         'username',
         'email', 
         'password', 
-        'email_verified_at',
+        'email_subscribed',
         'enabled',
         'client_id',
         'remember_token', //varchar
@@ -55,6 +55,11 @@ class User_Model extends MY_Model
         return $this->roles()->where('rolename', $roleName)->exists();
     }
 
+    /*public function hasGuard($guardName)
+    {
+        return $this->roles()->where('guard_name', $guardName)->exists();
+    }*/
+
     public function client()
     {
         return $this->belongsTo(Client_model::class, 'client_id', 'id');  
@@ -70,10 +75,12 @@ class User_Model extends MY_Model
         //return date_diff(date_create($this->date_vigency), date_create('now'))->d;
         //https://blog.devgenius.io/how-to-find-the-number-of-days-between-two-dates-in-php-1404748b1e84
         //return date_diff(date_create('now'),date_create($this->date_vigency))->format('%R%a days');return date_diff(date_create('now'),date_create($this->date_vigency))->format('%R%a days');
-        if ($this->enabled > 0) {
+        if ($this->enabled > 0 && $this->email_subscribed > 0) {
             return 'Activo';
-        } else {
+        } elseif($this->enabled > 0 xor $this->email_subscribed > 0) {
             return 'Suspendido';
+        }else{
+            return 'Nueva solicitud';
         }
     }
 
