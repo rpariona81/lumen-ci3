@@ -23,8 +23,10 @@
                 </div>
                 <div class="card-body d-flex flex-column text-sm">
                     <div class="text-center px-4 mb-3">
-                        <img class="mw-100 mh-300px card-rounded-bottom" alt="portada"
-                            src="<?= $item->ebook_front_page ?? base_url('assets/media/books/portada_amarilla.png') ?>" />
+                        <!--<img class="mw-100 mh-300px card-rounded-bottom" alt="portada"
+                            src="< ?= $item->ebook_front_page ? base_url($item->ebook_front_page):  base_url('assets/media/books/portada_amarilla.png') ?>" />-->
+                         <img class="mw-100 mh-300px card-rounded-bottom" alt="portada"
+                            src="<?= base_url('assets/media/books/portada_amarilla.png') ?>" />   
                     </div>
                     <ul class="list-unstyled mt-0 mb-4">
                         <li>
@@ -72,7 +74,7 @@
 
 <script>
 function verLibro(info, label, book_id) {
-    console.log(info + '---' + label + "--" + book_id);
+    //console.log(info + '---' + label + "--" + book_id);
     let titulo = info;
     $('.modal-title').html(titulo);
     if (!(label == '')) {
@@ -90,9 +92,9 @@ function verLibro(info, label, book_id) {
         $.post("<?= base_url('user/addview') ?>", {
                 book_id: book_id
             },
-            function(data, status) {
+            /*function(data, status) {
                 console.log("Data: " + data + "\nStatus: " + status);
-            });
+            }*/);
     } else {
         $('#my-pdf').empty();
         $('#my-pdf').removeClass();

@@ -4,6 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 use Illuminate\Support\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Capsule\Manager as DB;
+use PhpParser\Node\NullableType;
 
 class LibraryLib
 {
@@ -19,13 +20,11 @@ class LibraryLib
         $this->ci->load->model('Session_model');
         $this->ci->load->model('Ebook_model');
         $this->ci->load->model('Repository_model');
+        $this->ci->load->model('Viewebook_model');
         $this->ci->load->library('session');
     }
 
-    public function selectEbook($id = null)
-    {
-        
-    }
+    public function selectEbook($id = null) {}
 
     public function countEbooksFind($search_text = NULL, $client_id = NULL)
     {
@@ -205,5 +204,15 @@ class LibraryLib
         //$perPage = 3;
         $currentPageItems = $collected->slice(($skip * $take), $take)->values();
         return $currentPageItems;
+    }
+
+    public function addViewEbookUser($data = null)
+    {
+        $model = new $this->ci->Viewebook_model();
+        $model->fill($data);
+        if($model->save($data)){
+            return true;
+        };
+        return false;
     }
 }

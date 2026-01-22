@@ -106,7 +106,7 @@
                                             <a href="#"
                                                 class="fw-bolder text-hover-primary fs-6"><?= $this->session->userdata('user_role_title') ?></a>
 
-                                            <img src="<?= base_url() ?>assets/media/avatars/150-26.jpg" alt="user" />
+                                            <img src="<?= base_url() ?>assets/media/avatars/blank.png" alt="user" />
                                         </div>
                                         <!--begin::Menu-->
                                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
@@ -118,7 +118,7 @@
                                                     <!--begin::Avatar-->
                                                     <div class="symbol symbol-50px me-5">
                                                         <img alt="Logo"
-                                                            src="<?= base_url() ?>assets/media/avatars/150-26.jpg" />
+                                                            src="<?= base_url() ?>assets/media/avatars/blank.png" />
                                                     </div>
                                                     <!--end::Avatar-->
                                                     <!--begin::Username-->

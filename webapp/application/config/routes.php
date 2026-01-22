@@ -72,10 +72,15 @@ $route['home'] = 'homecontroller/index';
 $route['user'] = 'appcontroller/index';
 $route['user/catalog'] = 'appcontroller/view_cards';
 $route['user/catalog/(:num)'] = 'appcontroller/view_cards/$1';
+$route['user/perfil'] = 'appcontroller/viewPerfil';
+$route['user/credenciales'] = 'appcontroller/viewCredenciales';
 
 // $route['user/ebooks'] = 'appcontroller/view_ebookcards';
 // $route['user/ebooks/(:num)'] = 'appcontroller/view_ebookcards/$1';
 
 $route['user/addview']['post'] = 'appcontroller/addViewEbook';
+
+$route['user/updateProfile'] = 'appcontroller/actualizaPerfil';
+$route['user/updatePassword'] = 'appcontroller/cambiarClave';
 
 $route['admin'] = 'admincontroller/index';
