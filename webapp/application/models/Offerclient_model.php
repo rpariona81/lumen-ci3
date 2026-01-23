@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -8,21 +8,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 //https://notes.enovision.net/codeigniter/eloquent-in-codeigniter/how-to-use-the-models
 
-class OfferClient_Model extends MY_Model
+class Offerclient_Model extends MY_Model
 {
     use HasFactory;
-    
-	protected $table = "t_offer_clients";
+
+    protected $table = "t_offer_clients";
 
     protected $fillable = [
         'client_id',
+        'career_offered_code',
         'career_offered',
         'level_offered',
         'career_timeframe',
         'career_related'
-    ]; 
+    ];
 
-    public function client()
+    /*public function client()
     {
         return $this->belongsTo(Client_model::class, 'client_id');
     }
@@ -30,5 +31,5 @@ class OfferClient_Model extends MY_Model
     public function career()
     {
         return $this->belongsTo(Career_model::class, 'career_id');
-    }
+    }*/
 }

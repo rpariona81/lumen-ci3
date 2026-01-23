@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('t_offer_clients', function (Blueprint $table) {
             $table->bigIncrements(column: 'id'); // id
             $table->unsignedBigInteger('client_id');
+            $table->string(column: 'career_offered_code')->nullable();
             $table->string(column: 'career_offered');   // e.g., Computer Science
             $table->string(column: 'level_offered')->nullable();    // e.g., Bachelor, Master
             $table->string(column: 'career_timeframe')->nullable();     // duration

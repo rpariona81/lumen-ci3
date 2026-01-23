@@ -28,6 +28,7 @@ class OfferClientSeeder extends Seeder
 
         $offer1 = OfferClient::create([
             'client_id' => $client1->id,
+            'career_offered_code' => 'P002',
             'career_offered' => 'Computer Science',
             'level_offered' => 'Bachelor',
             'career_timeframe' => '4 years',
@@ -38,6 +39,7 @@ class OfferClientSeeder extends Seeder
 
         $offer2 = OfferClient::create([
             'client_id' => $client2->id,
+            'career_offered_code' => 'P001',
             'career_offered' => 'Business Administration',
             'level_offered' => 'Master',
             'career_timeframe' => '2 years',
@@ -48,6 +50,7 @@ class OfferClientSeeder extends Seeder
 
         $offer3 = OfferClient::create([
             'client_id' => $client3->id,
+            'career_offered_code' => 'P003',
             'career_offered' => 'Graphic Design',
             'level_offered' => 'Diploma',
             'career_timeframe' => '1 year',
@@ -58,6 +61,7 @@ class OfferClientSeeder extends Seeder
 
         $offer4 = OfferClient::create([
             'client_id' => $client1->id,
+            'career_offered_code' => 'P005',
             'career_offered' => 'Mechanical Engineering',
             'level_offered' => 'Bachelor',
             'career_timeframe' => '4 years',
@@ -68,6 +72,7 @@ class OfferClientSeeder extends Seeder
 
         $offer5 = OfferClient::create([
             'client_id' => $client2->id,
+            'career_offered_code' => 'P006',
             'career_offered' => 'Psychology',
             'level_offered' => 'Master',
             'career_timeframe' => '2 years',
@@ -78,6 +83,7 @@ class OfferClientSeeder extends Seeder
 
         $offer6 = OfferClient::create([
             'client_id' => $client3->id,
+            'career_offered_code' => 'P005',
             'career_offered' => 'Data Science',
             'level_offered' => 'PhD',
             'career_timeframe' => '3 years',

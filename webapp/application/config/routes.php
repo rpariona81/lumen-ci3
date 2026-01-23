@@ -100,3 +100,16 @@ $route['admin/catalogo'] = 'admincontroller/verCatalogo';
 $route['admin/detalle/(:num)'] = 'admincontroller/verLibro/$1';
 $route['admin/ebook/(:num)'] = 'admincontroller/editaEbook/$1';
 $route['admin/updateebook'] = 'admincontroller/actualizaEbook';
+
+$route['admin/programas'] = 'admincontroller/verProgramas';
+$route['admin/newprograma'] = 'admincontroller/nuevoPrograma';
+$route['admin/createProgram'] = 'admincontroller/creaPrograma';
+$route['admin/programa/(:num)'] = 'admincontroller/editaPrograma/$1';
+$route['admin/updatePrograma'] = 'admincontroller/actualizaPrograma';
+$route['admin/removeProgram'] = 'admincontroller/eliminaPrograma';
+
+$route['admin/repository'] = 'admincontroller/verRepositorios';
+$route['admin/repo/(:num)'] = 'admincontroller/verRepo/$1';
+$route['admin/updaterepo'] = 'admincontroller/actualizaRepo';
+
+$route['admin/info'] = 'admincontroller/viewClientInfo';

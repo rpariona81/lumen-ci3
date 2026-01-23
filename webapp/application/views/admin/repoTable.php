@@ -13,7 +13,7 @@
                 <div class="card">
                     <!--begin::Card header-->
                     <div class="card-header bg-secondary border-0 pt-1">
-                        <h2 class="card-title">Libros disponibles</h2>
+                        <h2 class="card-title">Repositorio institucional</h2>
                         <!-- <div class="d-sm-flex align-items-center"> -->
                         <!--< ?= form_open('', array('id' => 'FRM_DATOS', 'class' => 'w-100 position-relative mb-3', 'onsubmit' => 'window.location.reload()')); ?>-->
                         <!--begin::Card title-->
@@ -63,15 +63,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($query as $item) : ?>
+                                    <?php foreach ($query as $repo) : ?>
                                         <tr class="align-middle">
                                             <td class="align-middle px-2">
-                                                <?= $item->ebook_code ?></td>
+                                                <?= $repo->repo_code?? 'Disponible para editar'?></td>
                                             <td class="d-flex align-items-center">
                                                 <!--begin:: Avatar -->
                                                 <div class="symbol symbol-50px overflow-hidden me-3">
                                                     <div class="symbol-label">
-                                                        <img src="<?= $item->ebook_front_page ?? base_url('assets/media/books/portada_amarilla.png') ?>"
+                                                        <img src="<?=base_url('assets/media/books/portada_amarilla.png')?>"
                                                             alt="Portada" class="w-100" />
                                                     </div>
                                                 </div>
@@ -79,16 +79,17 @@
                                                 <!--begin::User details-->
                                                 <div class="d-flex flex-column">
                                                     <strong
-                                                        class="text-hover-primary mb-1"><?= $item->ebook_display ?></strong>
+                                                        class="text-hover-primary mb-1"><?= $repo->repo_display ?></strong>
+                                                    
                                                 </div>
                                                 <!--begin::User details-->
                                             </td>
                                             <!-- <td></td> -->
                                             <td class="align-middle px-2">
-                                                <?= str_pad((int)$item->ebook_pages, 5, '0', STR_PAD_LEFT); ?></td>
+                                                <?= str_pad((int)$repo->repo_pages, 5, '0', STR_PAD_LEFT); ?></td>
                                             <td>
                                                 <?php
-                                                $catalog_names = explode(',', $item->client_ebook_tags);
+                                                $catalog_names = explode(',', $repo->repo_tags);
                                                 //$catalog_names = array();
                                                 foreach ($catalog_names as $catalog) {
                                                     echo "<span class='badge badge-primary'>" . $catalog . "</span>&nbsp";
@@ -98,14 +99,14 @@
                                             <td>
                                                 <div class="btn-group" role="group" aria-label="Basic example">
                                                     <?php
-                                                    if ($item->ebook_available) {
-                                                        echo '<a name="Detalle" href="' . base_url('/admin/detalle/' . $item->id) . '" class="btn btn-primary btn-sm display-inline" data-bs-toggle="tooltip" data-bs-placement="left" title="Ver detalles"><i class="fa fa-eye"></i></button></a>';
+                                                    if ($repo->repo_available) {
+                                                        echo '<a name="Detalle" href="' . base_url('/admin/viewrepo/' . $repo->id) . '" class="btn btn-primary btn-sm display-inline" data-bs-toggle="tooltip" data-bs-placement="left" title="Ver detalles"><i class="fa fa-eye"></i></button></a>';
                                                     }
                                                     ?>
 
                                                     <a class="btn btn-warning btn-sm" data-bs-toggle="tooltip"
                                                         data-bs-placement="left" title="Editar"
-                                                        href="<?= base_url('/admin/ebook/' . $item->id) ?>"><i
+                                                        href="<?= base_url('/admin/repo/' . $repo->id) ?>"><i
                                                             class="fa fa-edit"></i></a>
                                                 </div>
                                             </td>

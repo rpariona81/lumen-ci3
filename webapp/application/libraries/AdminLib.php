@@ -213,8 +213,53 @@ class AdminLib
         exit();
         $model = $this->ci->Clientebook_model::where('ebook_id', '=', $ebook_id)->get();
             //->where('client_id', '=', $client_id)->first();
-            print_r($model);
-            exit();
+            //print_r($model);
+            //exit();
         return $model;
+    }
+
+    public function getRepositories()
+    {
+        $repos = array();
+        $client_id = $this->ci->session->userdata('Client') ? $this->ci->Client_model->where('client_name', $this->ci->session->userdata('Client'))->first()->id : null;
+        //$lastViews = $this->ci->Repository_model::all();
+        //$repos = $this->ci->Repository_model::where('client_id', '=', $client_id)->get();
+        $repos = DB::table('t_client_repository')
+            ->where('client_id', '=', $client_id)
+            ->get();
+        return $repos;
+    }
+
+    public function selectRepo($repo_id)
+    {
+        $repo = array();
+        $client_id = $this->ci->session->userdata('Client') ? $this->ci->Client_model->where('client_name', $this->ci->session->userdata('Client'))->first()->id : null;
+        $repo = $this->ci->Repository_model::where('id', '=', $repo_id)->first();
+        /*$repo = DB::table('t_client_repository')
+            ->where('client_id', '=', $client_id)
+            ->where('id', '=', $repo_id)
+            ->first();*/
+        return $repo;
+    }
+
+    public function getCatalogRepo()
+    {
+        $catalogRepo = array();
+        $array_tags = array();
+        $client_id = $this->ci->session->userdata('Client') ? $this->ci->Client_model->where('client_name', $this->ci->session->userdata('Client'))->first()->id : null;
+        //$lastViews = $this->ci->Viewebook_model::all();
+        //$lastViews = $this->ci->Viewebook_model::leftjoin('t_ebooks', 't_ebooks.id', '=', 't_ebooks_views.ebook_id')
+        $catalogRepo = DB::table('t_client_repository')
+            ->where('client_id', '=', $client_id)
+            ->distinct('t_client_repository.repo_tags')
+            ->get();
+        foreach ($catalogRepo as $tags) {
+            $client_ebook_tags = explode(',', $tags->client_ebook_tags);
+            foreach ($client_ebook_tags as $tag)
+                array_push($array_tags, $tag);
+        }
+        $unique_array = array_unique($array_tags);
+
+        return $unique_array;
     }
 }

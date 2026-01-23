@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class AdminController extends CI_Controller
 {
@@ -14,6 +16,7 @@ class AdminController extends CI_Controller
         $this->load->model('Ebook_model');
         $this->load->model('Viewebook_model');
         $this->load->model('Clientebook_model');
+        $this->load->model('Offerclient_model');
         $this->load->library('pagination');
     }
 
@@ -298,13 +301,260 @@ class AdminController extends CI_Controller
             $model = Clientebook_model::where('ebook_id', '=', $ebook_id)->where('client_id', '=', $client_id)->first();
             //echo $model;
             //exit();
-            
+
             $model->fill($data);
             $model->save($data);
             $this->session->set_flashdata('flashSuccess', 'Actualización exitosa de etiquetas.');
             redirect_back();
             //$this->session->set_flashdata('flashError', 'Error de carga de archivo.');
             //redirect_back(); 
+        } catch (Exception $e) {
+            $this->session->set_flashdata('flashError', $e->getMessage());
+            exit();
+        }
+    }
+
+    public function viewClientInfo()
+    {
+        $client_id = $this->Client_model->where('client_name', $this->session->userdata('Client'))->first()->id;
+        if (isset($client_id)) {
+            $data['content'] = 'admin/clientInfo';
+            $this->load->view('admin/templateAdmin', $data);
+        } else {
+            $this->session->set_flashdata('error');
+            redirect('/login');
+        }
+    }
+
+    /**
+     * CONTROL DE PROGRAMAS DE ESTUDIOS
+     *  */
+
+    public function verProgramas()
+    {
+        $client_id = $this->Client_model->where('client_name', $this->session->userdata('Client'))->first()->id;
+        if (isset($client_id)) {
+            $data['query'] = Offerclient_model::where('client_id', '=', $client_id)->get();
+            $data['content'] = 'admin/programasTable';
+            $this->load->view('admin/templateAdmin', $data);
+        } else {
+            $this->session->set_flashdata('error');
+            redirect('/login');
+        }
+    }
+
+    public function nuevoPrograma()
+    {
+        $client_id = $this->Client_model->where('client_name', $this->session->userdata('Client'))->first()->id;
+        if (isset($client_id)) {
+            $data['content'] = 'admin/programaNew';
+            $this->load->view('admin/templateAdmin', $data);
+        } else {
+            $this->session->set_flashdata('error');
+            redirect('/login');
+        }
+    }
+
+    public function creaPrograma()
+    {
+        $this->form_validation->set_rules('career_offered', 'Nombre del programa', 'required');
+        //si el proceso falla mostramos errores
+        if ($this->form_validation->run() == FALSE) {
+            $this->nuevoPrograma();
+            //en otro caso procesamos los datos
+        } else {
+            $client_id = $this->Client_model->where('client_name', $this->session->userdata('Client'))->first()->id;
+            if (isset($client_id)) {
+                date_default_timezone_set('America/Lima');
+                $data = array(
+                    'career_offered' => trim($this->input->post('career_offered')),
+                    'career_offered_code' => trim($this->input->post('career_offered_code')),
+                    'client_id' => $client_id
+                );
+                //echo json_encode($data);
+                //exit();
+                $model = new Offerclient_model();
+                $model->fill($data);
+                $model->save($data);
+                /*echo json_encode($model);
+                exit();*/
+                redirect('/admin/programas');
+            } else {
+                $this->nuevoPrograma();
+            }
+        }
+    }
+
+    public function editaPrograma($offer_id)
+    {
+        $client_id = $this->Client_model->where('client_name', $this->session->userdata('Client'))->first()->id;
+        if (isset($client_id)) {
+            $data['programa'] = Offerclient_model::findOrFail($offer_id);
+            $data['content'] = 'admin/programaEdit';
+            $this->load->view('admin/templateAdmin', $data);
+        } else {
+            $this->session->set_flashdata('error');
+            redirect('/login');
+        }
+    }
+
+    public function actualizaPrograma()
+    {
+        $client_id = $this->Client_model->where('client_name', $this->session->userdata('Client'))->first()->id;
+        if (isset($client_id)) {
+            date_default_timezone_set('America/Lima');
+            $id = $this->input->post('id');
+            $data = array(
+                'career_offered' => $this->input->post('career_offered'),
+                'career_offered_code' => $this->input->post('career_offered_code'),
+            );
+
+            $model = Offerclient_model::findOrFail($id);
+            $model->fill($data);
+            $model->save($data);
+            redirect('/admin/programas', 'refresh');
+        } else {
+            echo "fallo actualizacion";
+        }
+    }
+
+    public function eliminaPrograma()
+    {
+        $client_id = $this->Client_model->where('client_name', $this->session->userdata('Client'))->first()->id;
+        if (isset($client_id)) {
+            $id_career = $this->input->post('id_career', true);
+            $programa = Offerclient_model::find($id_career);
+            $programa->delete();
+            redirect('/admin/programas', 'refresh');
+            //CareerEloquent::where('id', $id_career)->delete();
+        } else {
+            $this->session->set_flashdata('flashError', 'No se puede eliminar el programa seleccionado porque tiene registros.');
+            redirect('/admin/programas', 'refresh');
+        }
+    }
+
+
+    /** Repositorio de cliente */
+    public function verRepositorios()
+    {
+        $this->load->library('AdminLib');
+        $data = [];
+        $data['pagina_title'] = 'Panel de control';
+        $util = new AdminLib();
+        $data['catalogs'] = $util->getCatalogRepo();
+        $data['query'] = $util->getRepositories();
+        //print_r(json_encode($data));
+        //exit();
+        $data['content'] = 'admin/repoTable';
+        $this->load->view('admin/templateAdmin', $data);
+    }
+
+    public function verRepo($repo_id = NULL)
+    {
+        //echo "repo ".$repo_id;
+        //exit();
+        $this->load->library('AdminLib');
+        $data = [];
+        $data['pagina_title'] = 'Panel de control';
+        $util = new AdminLib();
+        //print_r(json_encode($data));
+        //exit();
+        $data['repo'] = $util->selectRepo($repo_id);
+
+        $data['content'] = 'admin/repoEdit';
+        $this->load->view('admin/templateAdmin', $data);
+    }
+
+    public function editaRepo($repo_id = NULL)
+    {
+        $this->load->library('AdminLib');
+        $data = [];
+        $data['pagina_title'] = 'Panel de control';
+        $util = new AdminLib();
+        $data['repo'] = $util->selectRepo($repo_id);
+        $data['content'] = 'admin/repoEdit';
+        $this->load->view('admin/templateAdmin', $data);
+    }
+
+    public function _do_upload_repo()
+    {
+        $config['upload_path']          = FCPATH . 'uploads/pdf/';
+        $config['allowed_types']        = 'pdf';
+        $config['max_size']             = 1048576;
+        $config['file_name']            = round(microtime(true) * 10) . '_' . $_FILES['repo_file']['name'];
+        $config['remove_spaces']        = TRUE;
+
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('repo_file')) {
+            //$error = array('error' => $this->upload->display_errors());
+            //print_r($error); die();
+            $data['error_string'] = 'Error de carga de archivo: ' . $this->upload->display_errors('', '');
+            $data['status'] = 0;
+            exit();
+        } else {
+            $data = array('upload_data' => $this->upload->data());
+        }
+        return $data;
+    }
+
+    public function actualizaRepo()
+    {
+        //$this->_validate();
+        try {
+            $client_id = $this->Client_model->where('client_name', $this->session->userdata('Client'))->first()->id;
+            if (isset($client_id)) {
+                $id = $this->input->post('id');
+                $checkFile = $this->input->post('checkFile');
+                $repocode_uuid = Str::uuid()->toString();
+                $data = array(
+                    'repo_code' => $this->input->post('repo_code',true) ? trim($this->input->post('repo_code')) : $repocode_uuid,
+                    'repo_isbn' => $this->input->post('repo_isbn', true) ? trim($this->input->post('repo_isbn', true)) : NULL,
+                    'repo_title' => $this->input->post('repo_title', true) ? trim($this->input->post('repo_title', true)) : NULL,
+                    'repo_tags' => $this->input->post('repo_tags', true) ? htmlspecialchars(trim($this->input->post('repo_tags', true))) : NULL,
+                    'repo_display' => $this->input->post('repo_display', true) ? trim($this->input->post('repo_display', true)) : NULL,
+                    'repo_author' => $this->input->post('repo_author', true),
+                    'repo_editorial' => $this->input->post('repo_editorial', true),
+                    'repo_year' => $this->input->post('repo_year', true)?? '2000',
+                    'repo_pages' => $this->input->post('repo_pages', true) ? $this->input->post('repo_pages', true) : 9999
+                );
+                $checkFile = isset($checkFile) ?? 0;
+                
+                if ($checkFile) {
+                    if (!empty($_FILES)) {
+                        $upload = $this->_do_upload_repo();
+                        if ($upload) {
+                            $data['repo_url'] = $upload['upload_data']['full_path'];
+                            $data['repo_file'] = $upload['upload_data']['file_name'];
+                            $model = Repository_model::findOrFail($id);
+                            $model->fill($data);
+                            $model->save($data);
+                            $this->session->set_flashdata('flashSuccess', 'Actualización exitosa.');
+                            redirect_back();
+                        } else {
+                            $this->session->set_flashdata('flashError', 'Error de carga de archivo. Intente nuevamente.');
+                            //$this->viewConvocatoria($data['offer_id']);
+                            //redirect('users/convocatoria/' . $data['offer_id']);
+                            //redirect($_SERVER['REQUEST_URI'], 'refresh'); 
+                            redirect_back();
+                            exit();
+                            //return FALSE;
+                        }
+                    } else {
+                        $this->session->set_flashdata('flashError', 'Error de carga de archivo. Intente nuevamente.');
+                        exit();
+                    }
+                } else {
+                    //redirect($_SERVER['REQUEST_URI'], 'refresh'); 
+                    $model = Repository_model::findOrFail($id);
+                    $model->fill($data);
+                    $model->save($data);
+                    $this->session->set_flashdata('flashSuccess', 'Actualización exitosa, no se modifica el PDF.');
+                    redirect_back();
+                    //$this->session->set_flashdata('flashError', 'Error de carga de archivo.');
+                    //redirect_back(); 
+                }
+            }
         } catch (Exception $e) {
             $this->session->set_flashdata('flashError', $e->getMessage());
             exit();
