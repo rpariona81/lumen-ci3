@@ -92,3 +92,11 @@ $route['admin/inactiveUser'] = 'admincontroller/desactivaUser';
 
 $route['admin/activaRequest'] = 'admincontroller/activaRequest';
 $route['admin/desactivaRequest'] = 'admincontroller/desactivaRequest';
+
+$route['admin/users/(:any)'] = 'admincontroller/editaUsuario/$1';
+$route['admin/user/update'] = 'admincontroller/actualizaUsuario';
+
+$route['admin/catalogo'] = 'admincontroller/verCatalogo';
+$route['admin/detalle/(:num)'] = 'admincontroller/verLibro/$1';
+$route['admin/ebook/(:num)'] = 'admincontroller/editaEbook/$1';
+$route['admin/updateebook'] = 'admincontroller/actualizaEbook';

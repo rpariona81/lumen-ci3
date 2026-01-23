@@ -23,6 +23,7 @@ class AdminLib
         $this->ci->load->model('Repository_model');
         $this->ci->load->model('Offerclient_model');
         $this->ci->load->model('Viewebook_model');
+        $this->ci->load->model('Clientebook_model');
         $this->ci->load->library('session');
     }
 
@@ -75,6 +76,8 @@ class AdminLib
         return $cantBooks;
     }
 
+
+
     public function getLastViews()
     {
         $lastViews = array();
@@ -106,10 +109,13 @@ class AdminLib
         $users = array();
         $client_id = $this->ci->session->userdata('Client') ? $this->ci->Client_model->where('client_name', $this->ci->session->userdata('Client'))->first()->id : null;
 
-        $users = $this->ci->User_model::with('roles')
+        $users = DB::table('t_users')
+            ->leftjoin('t_role_user', 't_role_user.user_id', '=', 't_users.id')
+            ->leftJoin('t_roles', 't_roles.id', '=', 't_role_user.role_id')
             ->where('client_id', '=', $client_id)
-            ->where('enabled', '=', true)
-            ->where('roles[0]["guard_name"]','=','user')
+            ->where('email_subscribed', '=', true)
+            ->where('guard_name', '=', 'user')
+            ->orderBy('t_users.updated_at', 'desc')
             ->get();
 
         return $users;
@@ -117,15 +123,24 @@ class AdminLib
 
     public function getRequests()
     {
-        $users = array();
+        $requests = array();
         $client_id = $this->ci->session->userdata('Client') ? $this->ci->Client_model->where('client_name', $this->ci->session->userdata('Client'))->first()->id : null;
 
-        $users = $this->ci->User_model::with('roles')
+        /*$requests = $this->ci->User_model::with('roles')
             ->where('client_id', '=', $client_id)
             ->where('enabled', '=', false)
+            ->get();*/
+
+        $requests = DB::table('t_users')
+            ->leftjoin('t_role_user', 't_role_user.user_id', '=', 't_users.id')
+            ->leftJoin('t_roles', 't_roles.id', '=', 't_role_user.role_id')
+            ->where('client_id', '=', $client_id)
+            ->where('email_subscribed', '=', false)
+            ->where('guard_name', '=', 'user')
+            ->orderBy('t_users.updated_at', 'desc')
             ->get();
 
-        return $users;
+        return $requests;
     }
 
     public function activeUser($user_id, $client_id)
@@ -141,5 +156,65 @@ class AdminLib
         }
 
         return false;
+    }
+
+    public function getEbooks()
+    {
+        $ebooks = array();
+        $client_id = $this->ci->session->userdata('Client') ? $this->ci->Client_model->where('client_name', $this->ci->session->userdata('Client'))->first()->id : null;
+        //$lastViews = $this->ci->Viewebook_model::all();
+        //$lastViews = $this->ci->Viewebook_model::leftjoin('t_ebooks', 't_ebooks.id', '=', 't_ebooks_views.ebook_id')
+        $ebooks = DB::table('t_client_ebook')
+            ->leftjoin('t_ebooks', 't_client_ebook.ebook_id', '=', 't_ebooks.id')
+            ->where('t_client_ebook.client_id', '=', $client_id)
+            ->distinct('t_ebooks.id')
+            ->get();
+        return $ebooks;
+    }
+
+    public function selectEbook($ebook_id)
+    {
+        $ebook = array();
+        $client_id = $this->ci->session->userdata('Client') ? $this->ci->Client_model->where('client_name', $this->ci->session->userdata('Client'))->first()->id : null;
+        $ebook = DB::table('t_client_ebook')
+            ->leftjoin('t_ebooks', 't_client_ebook.ebook_id', '=', 't_ebooks.id')
+            ->where('t_client_ebook.client_id', '=', $client_id)
+            ->where('t_client_ebook.ebook_id', '=', $ebook_id)
+            ->distinct('t_ebooks.id')
+            ->first();
+        return $ebook;
+    }
+
+    public function getCatalogs()
+    {
+        $catalogs = array();
+        $array_tags = array();
+        $client_id = $this->ci->session->userdata('Client') ? $this->ci->Client_model->where('client_name', $this->ci->session->userdata('Client'))->first()->id : null;
+        //$lastViews = $this->ci->Viewebook_model::all();
+        //$lastViews = $this->ci->Viewebook_model::leftjoin('t_ebooks', 't_ebooks.id', '=', 't_ebooks_views.ebook_id')
+        $catalogs = DB::table('t_client_ebook')
+            ->where('client_id', '=', $client_id)
+            ->distinct('t_client_ebook.client_ebook_tags')
+            ->get();
+        foreach ($catalogs as $tags) {
+            $client_ebook_tags = explode(',', $tags->client_ebook_tags);
+            foreach ($client_ebook_tags as $tag)
+                array_push($array_tags, $tag);
+        }
+        $unique_array = array_unique($array_tags);
+
+        return $unique_array;
+    }
+
+    public function selectEbookClient($ebook_id)
+    {
+        $client_id = $this->ci->session->userdata('Client') ? $this->ci->Client_model->where('client_name', $this->ci->session->userdata('Client'))->first()->id : null;
+        print_r($client_id);
+        exit();
+        $model = $this->ci->Clientebook_model::where('ebook_id', '=', $ebook_id)->get();
+            //->where('client_id', '=', $client_id)->first();
+            print_r($model);
+            exit();
+        return $model;
     }
 }

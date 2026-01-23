@@ -11,7 +11,7 @@
                 <div class="row pt-3">
                     <div class="col-md-12 col-lg-12 align-self-center">
                         <div class="mb-3">
-                            <h5 class="card-title text-dark">Usuarios activos</h5>
+                            <h5 class="card-title text-dark">Usuarios registrados</h5>
                         </div>
                     </div>
                 </div>
@@ -50,9 +50,9 @@
                                     <td>
                                         <?php
                                         if ($item->enabled) {
-                                            echo '<span class="badge bg-success border text-white">' . $item->userflag . '</span>';
+                                            echo '<span class="badge bg-success border text-white">Activo</span>';
                                         } else {
-                                            echo '<span class="badge bg-danger border text-white">' . $item->userflag . '</span>';
+                                            echo '<span class="badge bg-danger border text-white">Inactivo</span>';
                                         }
                                         ?>
                                     </td>
@@ -79,7 +79,7 @@
                                             }
                                             ?>
                                             &nbsp;&nbsp;
-                                            <a class="btn btn-outline-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Editar" href="<?= base_url('/admin/estudiante/' . $item->id) ?>"><i class="fa fa-edit"></i></a>
+                                            <a class="btn btn-outline-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Editar" href="<?= base_url('/admin/users/' . $item->username) ?>"><i class="fa fa-edit"></i></a>
                                         </div>
                                     </td>
 
@@ -94,7 +94,6 @@
         </div>
     </div>
 </div>
-<script src="<?= base_url('assets/plugins/pdfobject/jquery-3.7.1.min.js') ?>"></script>
 <script>
     jQuery(document).ready(function() {
         toastr.options = {

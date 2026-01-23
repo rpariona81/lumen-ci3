@@ -56,6 +56,7 @@ class RegisterLib
                 //$newUser->username = (string) Str::uuid()->getHex() . '@';
                 $newUser->password = password_hash($password, PASSWORD_BCRYPT);
                 $newUser->enabled = false; // New users are disabled by default
+                $newUser->remember_token = base64_encode($password);
                 $newUser->save();
                 // Assign default role and client if necessary
                 $newUser->roles()->attach($role_user->id);

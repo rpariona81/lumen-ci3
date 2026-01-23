@@ -40,7 +40,8 @@ class User_Model extends MY_Model
         'lock' => 'boolean',
         'enabled' => 'boolean',
         'row' => 'integer',
-        'id' => 'integer'
+        'id' => 'integer',
+        'email_subscribed' => 'boolean'
     ];
 
     //protected $with = ['roles'];
@@ -77,9 +78,7 @@ class User_Model extends MY_Model
         //return date_diff(date_create('now'),date_create($this->date_vigency))->format('%R%a days');return date_diff(date_create('now'),date_create($this->date_vigency))->format('%R%a days');
         if ($this->enabled > 0 && $this->email_subscribed > 0) {
             return 'Activo';
-        } elseif($this->enabled > 0 xor $this->email_subscribed > 0) {
-            return 'Suspendido';
-        }else{
+        } else{
             return 'Nueva solicitud';
         }
     }

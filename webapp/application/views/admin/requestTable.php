@@ -50,37 +50,26 @@
                                     <td>
                                         <?php
                                         if ($item->enabled) {
-                                            echo '<span class="badge bg-success border text-white">' . $item->userflag . '</span>';
+                                            echo '<span class="badge bg-warning border text-white">No aceptado</span>';
                                         } else {
-                                            echo '<span class="badge bg-danger border text-white">' . $item->userflag . '</span>';
+                                            echo '<span class="badge bg-danger border text-white">Nueva solicitud</span>';
                                         }
                                         ?>
                                     </td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <?php
-                                            if ($item->enabled) {
-                                                //echo '<a class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Desactivar" href="<?= $item->id ? >"><i class="fa fa-eye-slash"></i></a>';
-                                                /*echo form_open('admin/enviaPassword');
-                                                echo '<input type="hidden" id="id" name="id" value="' . $item->username . '">';
-                                                echo '<button type="submit" name="submit" class="btn btn-outline-info btn-sm display-inline" data-bs-toggle="tooltip" data-bs-placement="left" title="Enviar contraseña"><i class="fa fa-envelope" style="color:red"></i></button>';
-                                                echo form_close();
-                                                echo "&nbsp;";*/
-
-                                                echo form_open('admin/desactivaRequest');
-                                                echo '<input type="hidden" id="username" name="username" value="' . $item->username . '">';
-                                                echo '<button type="submit" id="showtoast" name="submit" class="btn btn-outline-danger btn-sm display-inline" data-bs-toggle="tooltip" data-bs-placement="left" title="Desactivar"><i class="fa fa-eye-slash"></i></button>';
-                                                echo form_close();
-                                            } else {
-                                                //echo '<a class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Activar" href="<?= $item->id>"><i class="fa fa fa-eye"></i></a>';
                                                 echo form_open('admin/activaRequest');
                                                 echo '<input type="hidden" id="username" name="username" value="' . $item->username . '">';
-                                                echo '<button type="submit" id="showtoast" name="submit" class="btn btn-outline-primary btn-sm display-inline" data-bs-toggle="tooltip" data-bs-placement="left" title="Activar"><i class="fa fa-eye"></i></button>';
+                                                echo '<button type="submit" id="showtoast" name="submit" class="btn btn-outline-primary btn-sm display-inline" data-bs-toggle="tooltip" data-bs-placement="left" title="Aceptar"><i class="fa fa-check"></i></button>';
                                                 echo form_close();
-                                            }
+                                                echo "&nbsp;";
+                                                echo form_open('admin/desactivaRequest');
+                                                echo '<input type="hidden" id="username" name="username" value="' . $item->username . '">';
+                                                echo '<button type="submit" id="showtoast" name="submit" class="btn btn-outline-danger btn-sm display-inline" data-bs-toggle="tooltip" data-bs-placement="left" title="Rechazar"><i class="fa fa-times"></i></button>';
+                                                echo form_close();
+                                                
                                             ?>
-                                            &nbsp;&nbsp;
-                                            <a class="btn btn-outline-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Editar" href="<?= base_url('/admin/estudiante/' . $item->id) ?>"><i class="fa fa-edit"></i></a>
                                         </div>
                                     </td>
 
