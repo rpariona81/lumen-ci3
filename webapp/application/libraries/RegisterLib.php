@@ -28,8 +28,10 @@ class RegisterLib
             $last_at_pos = strrpos($email, '@');
             $len_email = strlen($email);
             $host = $_SERVER['HTTP_HOST'];
-            $subdomain_arr = explode('.', $host, 2); // Limit the split to 2 parts
-            $subdomain_name = $subdomain_arr[0];
+            $subdomain_arr = explode('.', $host, 4); // Limit the split to 2 parts
+            $subdomain_name = $subdomain_arr[0].'.'.$subdomain_arr[1];
+            //echo $subdomain_name;
+            //exit();
             if (isset($existingUser)) {
                 // User already exists
                 $this->ci->session->set_flashdata('error', 'Ya existe ese correo electrónico! Intente con otro.');
@@ -37,7 +39,7 @@ class RegisterLib
             } else {
                 // Create new user
                 $role_user = $this->ci->Role_model::where('rolename', 'user')->first();
-                $client_user = $this->ci->Client_model::where('client_subdomain', 'client01')->first();
+                $client_user = $this->ci->Client_model::where('client_subdomain', $subdomain_name)->first();
                 $newUser = new $this->ci->User_model();
                 $newUser->firstname = $firstname;
                 $newUser->lastname = $lastname;
