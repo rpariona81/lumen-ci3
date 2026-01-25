@@ -114,11 +114,6 @@
                                 <!--begin::Section-->
                                 <div class="fw-bold">
                                     <!--begin::Desc-->
-                                    <span class="text-muted"><?= $book->catalog_display ?></span>
-                                    <!--end::Desc-->
-                                </div>
-                                <div class="fw-bold">
-                                    <!--begin::Desc-->
                                     <span class="text-dark"><?= $book->ebook_pages ?>&nbsp;páginas</span>
                                     <!--end::Desc-->
                                 </div>
@@ -139,8 +134,8 @@
                                 </div>
                                 <div class="fw-bold">
                                     <!--begin::Desc-->
-                                    <span class="text-dark">Temas:
-                                        &nbsp;<!-- ?= substr(strip_tags(htmlspecialchars_decode($book->client_ebook_tags ?? 'Sin información'), "<div><b><br>"), 0, 100) ?></span>-->
+                                    <span class="text-dark">Etiquetas:<br>
+                                        <!-- ?= substr(strip_tags(htmlspecialchars_decode($book->client_ebook_tags ?? 'Sin información'), "<div><b><br>"), 0, 100) ?></span>-->
                                         <?php
                                         $client_ebook_tags = explode(',', $book->client_ebook_tags);
                                         //$catalog_names = array();

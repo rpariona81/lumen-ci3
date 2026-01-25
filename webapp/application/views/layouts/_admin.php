@@ -62,7 +62,7 @@
                 <a href="<?= base_url($this->session->userdata('user_rol')) ?>">
                     <!--<img alt="Logo" src="< ?= base_url() ?>assets/media/logos/logo-1-dark.svg" class="h-15px logo" />-->
                     <img alt="Logo"
-                        src="<?php echo (ENVIRONMENT === 'development') ?  'assets/media/logos/escudo.jpeg'  : base_url() . getenv('APP_LOGO') ?>"
+                        src="<?php echo (ENVIRONMENT === 'development') ?  base_url('assets/media/logos/escudo.jpg')  : base_url() . getenv('APP_LOGO') ?>"
                         class="h-40px logo" />
                 </a>
                 <!--end::Logo-->
@@ -413,7 +413,7 @@
                         <a href="index.html" class="d-lg-none">
                             <!--<img alt="Logo" src="<?= base_url() ?>assets/media/logos/logo-3.svg" class="h-30px" />-->
                             <img alt="Logo"
-                                src="<?php echo (ENVIRONMENT === 'development') ?  'assets/media/logos/escudo.jpeg'  : base_url() . getenv('APP_LOGO') ?>"
+                                src="<?php echo (ENVIRONMENT === 'development') ?  base_url('assets/media/logos/escudo.jpg')  : base_url() . getenv('APP_LOGO') ?>"
                                 class="h-30px" />
                         </a>
                     </div>

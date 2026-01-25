@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
@@ -480,7 +481,7 @@ class AdminController extends CI_Controller
     {
         $config['upload_path']          = FCPATH . 'uploads/pdf/';
         $config['allowed_types']        = 'pdf';
-        $config['max_size']             = 1048576;
+        $config['max_size']             = 81920000;
         $config['file_name']            = round(microtime(true) * 10) . '_' . $_FILES['repo_file']['name'];
         $config['remove_spaces']        = TRUE;
 
@@ -491,7 +492,8 @@ class AdminController extends CI_Controller
             //print_r($error); die();
             $data['error_string'] = 'Error de carga de archivo: ' . $this->upload->display_errors('', '');
             $data['status'] = 0;
-            exit();
+            //exit();
+            return false;
         } else {
             $data = array('upload_data' => $this->upload->data());
         }
@@ -508,25 +510,32 @@ class AdminController extends CI_Controller
                 $checkFile = $this->input->post('checkFile');
                 $repocode_uuid = Str::uuid()->toString();
                 $data = array(
-                    'repo_code' => $this->input->post('repo_code',true) ? trim($this->input->post('repo_code')) : $repocode_uuid,
                     'repo_isbn' => $this->input->post('repo_isbn', true) ? trim($this->input->post('repo_isbn', true)) : NULL,
                     'repo_title' => $this->input->post('repo_title', true) ? trim($this->input->post('repo_title', true)) : NULL,
-                    'repo_tags' => $this->input->post('repo_tags', true) ? htmlspecialchars(trim($this->input->post('repo_tags', true))) : NULL,
+                    'repo_tags' => $this->input->post('repo_tags', true) ? trim($this->input->post('repo_tags')) : NULL,
                     'repo_display' => $this->input->post('repo_display', true) ? trim($this->input->post('repo_display', true)) : NULL,
                     'repo_author' => $this->input->post('repo_author', true),
                     'repo_editorial' => $this->input->post('repo_editorial', true),
-                    'repo_year' => $this->input->post('repo_year', true)?? '2000',
                     'repo_pages' => $this->input->post('repo_pages', true) ? $this->input->post('repo_pages', true) : 9999
                 );
-                $checkFile = isset($checkFile) ?? 0;
-                
+                if($this->input->post('repo_year', true) != null){
+                    $data['repo_year'] = $this->input->post('repo_year', true);
+                }else{
+                    $data['repo_year'] = 2020;
+                }
+                $checkFile = isset($checkFile) ?? false;
+
                 if ($checkFile) {
                     if (!empty($_FILES)) {
                         $upload = $this->_do_upload_repo();
                         if ($upload) {
+                            //echo json_encode($data);
+                            //exit();
                             $data['repo_url'] = $upload['upload_data']['full_path'];
                             $data['repo_file'] = $upload['upload_data']['file_name'];
                             $model = Repository_model::findOrFail($id);
+                            if ($model->repo_code == NULL) $model->repo_code = $repocode_uuid;
+
                             $model->fill($data);
                             $model->save($data);
                             $this->session->set_flashdata('flashSuccess', 'Actualización exitosa.');
@@ -537,12 +546,12 @@ class AdminController extends CI_Controller
                             //redirect('users/convocatoria/' . $data['offer_id']);
                             //redirect($_SERVER['REQUEST_URI'], 'refresh'); 
                             redirect_back();
-                            exit();
+                            //exit();
                             //return FALSE;
                         }
                     } else {
                         $this->session->set_flashdata('flashError', 'Error de carga de archivo. Intente nuevamente.');
-                        exit();
+                        //exit();
                     }
                 } else {
                     //redirect($_SERVER['REQUEST_URI'], 'refresh'); 
@@ -557,7 +566,7 @@ class AdminController extends CI_Controller
             }
         } catch (Exception $e) {
             $this->session->set_flashdata('flashError', $e->getMessage());
-            exit();
+            //exit();
         }
     }
 }

@@ -45,7 +45,7 @@
                             <a href="<?= base_url('/' . $this->session->userdata('user_guard')) ?>">
                                 <!--<img alt="Logo" src="<?= base_url() ?>assets/media/logos/logo-1.svg" class="h-20px h-lg-30px" />-->
                                 <img alt="Logo"
-                                    src="<?php echo (ENVIRONMENT === 'development') ?  'assets/media/logos/escudo.jpeg'  : base_url() . getenv('APP_LOGO') ?>"
+                                    src="<?php echo (ENVIRONMENT === 'development') ?  base_url('assets/media/logos/escudo.jpg')  : base_url() . getenv('APP_LOGO') ?>"
                                     class="h-30px h-lg-50px" />
                             </a>
                         </div>

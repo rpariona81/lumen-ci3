@@ -29,7 +29,7 @@ class RegisterLib
             $len_email = strlen($email);
             $host = $_SERVER['HTTP_HOST'];
             $subdomain_arr = explode('.', $host, 4); // Limit the split to 2 parts
-            $subdomain_name = $subdomain_arr[0].'.'.$subdomain_arr[1];
+            $subdomain_name = $subdomain_arr[0] . '.' . $subdomain_arr[1];
             //echo $subdomain_name;
             //exit();
             if (isset($existingUser)) {
@@ -40,33 +40,38 @@ class RegisterLib
                 // Create new user
                 $role_user = $this->ci->Role_model::where('rolename', 'user')->first();
                 $client_user = $this->ci->Client_model::where('client_subdomain', $subdomain_name)->first();
-                $newUser = new $this->ci->User_model();
-                $newUser->firstname = $firstname;
-                $newUser->lastname = $lastname;
-                $newUser->email = $email;
+                if (isset($client_user)) {
+                    $newUser = new $this->ci->User_model();
+                    $newUser->firstname = $firstname;
+                    $newUser->lastname = $lastname;
+                    $newUser->email = $email;
 
-                //$password_generated = trim(strtolower(substr($email, (-1 * $len_email), $last_at_pos)));
-                //$password_generated = md5(substr($email, (-1 * $len_email), $last_at_pos));
+                    //$password_generated = trim(strtolower(substr($email, (-1 * $len_email), $last_at_pos)));
+                    //$password_generated = md5(substr($email, (-1 * $len_email), $last_at_pos));
 
-                // Source - https://stackoverflow.com/a
-                // Posted by houbysoft, modified by community. See post 'Timeline' for change history
-                // Retrieved 2026-01-16, License - CC BY-SA 3.0
-                //$password_generated = bin2hex(openssl_random_pseudo_bytes(5));
+                    // Source - https://stackoverflow.com/a
+                    // Posted by houbysoft, modified by community. See post 'Timeline' for change history
+                    // Retrieved 2026-01-16, License - CC BY-SA 3.0
+                    //$password_generated = bin2hex(openssl_random_pseudo_bytes(5));
 
-                //$newUser->username = $password_generated;
-                $newUser->username = Str::uuid()->toString();
-                //$newUser->username = (string) Str::uuid()->getHex() . '@';
-                $newUser->password = password_hash($password, PASSWORD_BCRYPT);
-                $newUser->enabled = false; // New users are disabled by default
-                $newUser->remember_token = base64_encode($password);
-                $newUser->save();
-                // Assign default role and client if necessary
-                $newUser->roles()->attach($role_user->id);
-                $newUser->client()->associate($client_user);
-                $newUser->save();
+                    //$newUser->username = $password_generated;
+                    $newUser->username = Str::uuid()->toString();
+                    //$newUser->username = (string) Str::uuid()->getHex() . '@';
+                    $newUser->password = password_hash($password, PASSWORD_BCRYPT);
+                    $newUser->enabled = false; // New users are disabled by default
+                    $newUser->remember_token = base64_encode($password);
+                    $newUser->save();
+                    // Assign default role and client if necessary
+                    $newUser->roles()->attach($role_user->id);
+                    $newUser->client()->associate($client_user);
+                    $newUser->save();
 
-                $this->ci->session->set_flashdata('success', 'Solicitud recibida con éxito, se activará su cuenta dentro de las próximas 24 hrs.');
-                return true;
+                    $this->ci->session->set_flashdata('success', 'Solicitud recibida con éxito, se activará su cuenta dentro de las próximas 24 hrs.');
+                    return true;
+                }else{
+                    $this->ci->session->set_flashdata('error', 'Verifique que se ubica en la página correcta.');
+                    return false;
+                }
             }
         } catch (Exception $e) {
             // Handle exception

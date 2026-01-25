@@ -17,7 +17,7 @@
                 <div class="row pt-3">
                     <div class="col-md-6">
                         <label for="repo_code">Código autogenerado (luego de actualizar)</label>
-                        <input type="text" class="form-control" id="repo_title" name="repo_code" value="<?= $repo->repo_code ?>" disabled>
+                        <input type="text" class="form-control" id="repo_code" name="repo_code" value="<?= $repo->repo_code ?>" disabled>
 
                     </div>
                     <div class="col-md-6">
@@ -41,22 +41,22 @@
                 <div class="row pt-3">
                     <div class="col-md-4">
                         <label for="repo_author">Autor</label>
-                        <input type="text" class="form-control" id="repo_author" name="repo_author" value="<?= ($repo->repo_author != NULL) ? $repo->repo_author : '' ?>">
+                        <input type="text" class="form-control" id="repo_author" name="repo_author" value="<?= ($repo->repo_author != NULL) ? $repo->repo_author : NULL ?>">
 
                     </div>
                     <div class="col-md-4">
                         <label for="repo_editorial">Editorial</label>
-                        <input type="text" class="form-control" id="repo_editorial" name="repo_editorial" value="<?= ($repo->repo_editorial != NULL) ? $repo->repo_editorial : '' ?>">
+                        <input type="text" class="form-control" id="repo_editorial" name="repo_editorial" value="<?= ($repo->repo_editorial != NULL) ? $repo->repo_editorial : NULL ?>">
 
                     </div>
                     <div class="col-md-2">
                         <label for="repo_year">Año</label>
-                        <input type="text" class="form-control" id="repo_year" name="repo_year" value="<?= ($repo->repo_year != NULL) ? $repo->repo_year : NULL ?>">
+                        <input type="number" class="form-control" id="repo_year" name="repo_year" value="<?= $repo->repo_year?>">
 
                     </div>
                     <div class="col-md-2">
                         <label for="repo_pages"># páginas</label>
-                        <input type="text" class="form-control" id="repo_pages" name="repo_pages" value="<?= ($repo->repo_pages != NULL) ? $repo->repo_pages : '' ?>">
+                        <input type="text" class="form-control" id="repo_pages" name="repo_pages" value="<?= ($repo->repo_pages != NULL) ? $repo->repo_pages : NULL ?>">
 
                     </div>
                 </div>
@@ -64,7 +64,20 @@
                 <div class="row pt-3">
                     <div class="col-md-12">
                         <label for="repo_tags">Etiquetas</label>
-                        <textarea class="form-control" id="repo_tags" name="repo_tags"><?= ($repo->repo_tags != NULL) ? trim($repo->tags) : '' ?></textarea>
+                        <?php $data = array(
+                            'name'      => 'repo_tags',
+                            'id'        => 'repo_tags',
+                            'value'     => $repo->repo_tags,
+                            'rows'      => '2',
+                            'cols'      => '40', // You can also set columns
+                            'class'     => 'form-control'
+                        );
+
+                        echo form_textarea($data);
+                        ?>
+                        <!-- < ?=form_textarea('repo_tags', $repo->repo_tags, array('class' => 'form-control','rows' => '5', 'id' => 'repo_tags'))?>-->
+
+                        </textarea>
                     </div>
                 </div>
                 <br><br>

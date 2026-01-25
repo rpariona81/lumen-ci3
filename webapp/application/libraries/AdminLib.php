@@ -197,9 +197,15 @@ class AdminLib
             ->distinct('t_client_ebook.client_ebook_tags')
             ->get();
         foreach ($catalogs as $tags) {
-            $client_ebook_tags = explode(',', $tags->client_ebook_tags);
-            foreach ($client_ebook_tags as $tag)
-                array_push($array_tags, $tag);
+            if (isset($tags->client_ebook_tags)) {
+                if (str_contains($tags->client_ebook_tags, ',')) {
+                    $client_ebook_tags = explode(',', $tags->client_ebook_tags);
+                    foreach ($client_ebook_tags as $tag)
+                        array_push($array_tags, $tag);
+                }else{
+                    array_push($array_tags, $tag);
+                }
+            }
         }
         $unique_array = array_unique($array_tags);
 
@@ -212,9 +218,9 @@ class AdminLib
         print_r($client_id);
         exit();
         $model = $this->ci->Clientebook_model::where('ebook_id', '=', $ebook_id)->get();
-            //->where('client_id', '=', $client_id)->first();
-            //print_r($model);
-            //exit();
+        //->where('client_id', '=', $client_id)->first();
+        //print_r($model);
+        //exit();
         return $model;
     }
 
@@ -254,9 +260,15 @@ class AdminLib
             ->distinct('t_client_repository.repo_tags')
             ->get();
         foreach ($catalogRepo as $tags) {
-            $client_ebook_tags = explode(',', $tags->client_ebook_tags);
-            foreach ($client_ebook_tags as $tag)
-                array_push($array_tags, $tag);
+            if (isset($tags->repo_tags)) {
+                if (str_contains($tags->repo_tags, ',')) {
+                    $client_repo_tags = explode(',', $tags->repo_tags);
+                    foreach ($client_repo_tags as $tag)
+                        array_push($array_tags, $tag);
+                } else {
+                    array_push($array_tags, $tags->repo_tags);
+                }
+            }
         }
         $unique_array = array_unique($array_tags);
 

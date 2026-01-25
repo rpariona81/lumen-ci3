@@ -66,12 +66,12 @@
                                     <?php foreach ($query as $repo) : ?>
                                         <tr class="align-middle">
                                             <td class="align-middle px-2">
-                                                <?= $repo->repo_code?? 'Disponible para editar'?></td>
+                                                <?= $repo->repo_code ?? 'Disponible para editar' ?></td>
                                             <td class="d-flex align-items-center">
                                                 <!--begin:: Avatar -->
                                                 <div class="symbol symbol-50px overflow-hidden me-3">
                                                     <div class="symbol-label">
-                                                        <img src="<?=base_url('assets/media/books/portada_amarilla.png')?>"
+                                                        <img src="<?= base_url('assets/media/books/portada_amarilla.png') ?>"
                                                             alt="Portada" class="w-100" />
                                                     </div>
                                                 </div>
@@ -80,7 +80,7 @@
                                                 <div class="d-flex flex-column">
                                                     <strong
                                                         class="text-hover-primary mb-1"><?= $repo->repo_display ?></strong>
-                                                    
+
                                                 </div>
                                                 <!--begin::User details-->
                                             </td>
@@ -89,11 +89,19 @@
                                                 <?= str_pad((int)$repo->repo_pages, 5, '0', STR_PAD_LEFT); ?></td>
                                             <td>
                                                 <?php
-                                                $catalog_names = explode(',', $repo->repo_tags);
-                                                //$catalog_names = array();
-                                                foreach ($catalog_names as $catalog) {
-                                                    echo "<span class='badge badge-primary'>" . $catalog . "</span>&nbsp";
+                                                if (isset($repo->repo_tags)) {
+                                                    //if (str_contains($repo->repo_tags, ',')) {
+                                                    $catalog_names = explode(',', $repo->repo_tags);
+                                                    //} else {
+                                                    //    $catalog_names = $repo->repo_tags;
+                                                    //}
+                                                    //$catalog_names = array();
+                                                    foreach ($catalog_names as $catalog) {
+                                                        echo "<span class='badge badge-primary'>" . $catalog . "</span>&nbsp";
+                                                    }
+                                                } else {
                                                 }
+
                                                 ?>
                                             </td>
                                             <td>

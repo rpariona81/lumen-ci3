@@ -88,11 +88,27 @@
                                                 <?= str_pad((int)$item->ebook_pages, 5, '0', STR_PAD_LEFT); ?></td>
                                             <td>
                                                 <?php
-                                                $catalog_names = explode(',', $item->client_ebook_tags);
-                                                //$catalog_names = array();
-                                                foreach ($catalog_names as $catalog) {
-                                                    echo "<span class='badge badge-primary'>" . $catalog . "</span>&nbsp";
+                                                /*if (isset($item->client_ebook_tags)) {
+                                                    if (str_contains($item->client_ebook_tags, ',')) {
+                                                        $catalog_names = explode(',', $item->client_ebook_tags);
+                                                    } else {
+                                                        $catalog_names = $item->client_ebook_tags;
+                                                    }
+                                                    //$catalog_names = array();
+                                                    foreach ($catalog_names as $catalog) {
+                                                        echo "<span class='badge badge-primary'>" . $catalog . "</span>&nbsp";
+                                                    }
+                                                } else {
                                                 }
+                                                */
+                                                if (isset($item->client_ebook_tags)) {
+                                                    $catalog_names = explode(',', $item->client_ebook_tags);
+                                                    foreach ($catalog_names as $catalog) {
+                                                        echo "<span class='badge badge-primary'>" . $catalog . "</span>&nbsp";
+                                                    }
+                                                } else {
+                                                }
+
                                                 ?>
                                             </td>
                                             <td>
