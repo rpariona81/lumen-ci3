@@ -66,7 +66,7 @@ class RegisterLib
                     $newUser->client()->associate($client_user);
                     $newUser->save();
 
-                    $this->ci->session->set_flashdata('success', 'Solicitud recibida con éxito, se activará su cuenta dentro de las próximas 24 hrs.');
+                    $this->ci->session->set_flashdata('success', 'Solicitud recibida con éxito, será atentida en un plazo de '.$_ENV['CLIENT_TIME_ATTENTION'].'.');
                     return true;
                 }else{
                     $this->ci->session->set_flashdata('error', 'Verifique que se ubica en la página correcta.');
