@@ -167,6 +167,7 @@ class AdminLib
         $ebooks = DB::table('t_client_ebook')
             ->leftjoin('t_ebooks', 't_client_ebook.ebook_id', '=', 't_ebooks.id')
             ->where('t_client_ebook.client_id', '=', $client_id)
+            ->where('ebook_available', '=', 1)
             ->distinct('t_ebooks.id')
             ->get();
         return $ebooks;
@@ -203,7 +204,7 @@ class AdminLib
                     $client_ebook_tags = explode(',', $tags->client_ebook_tags);
                     foreach ($client_ebook_tags as $tag)
                         array_push($array_tags, $tag);
-                }else{
+                } else {
                     array_push($array_tags, $tags->client_ebook_tags);
                 }
             }
@@ -233,6 +234,7 @@ class AdminLib
         //$repos = $this->ci->Repository_model::where('client_id', '=', $client_id)->get();
         $repos = DB::table('t_client_repository')
             ->where('client_id', '=', $client_id)
+            ->where('repo_available', '=', 1)
             ->get();
         return $repos;
     }
