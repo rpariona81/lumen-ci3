@@ -61,6 +61,7 @@ class LibraryLib
         $firstLoad = DB::table('t_client_ebook')
             ->leftjoin('t_ebooks', 't_client_ebook.ebook_id', '=', 't_ebooks.id')
             ->where('t_client_ebook.client_id', '=', $client_id)
+            ->where('t_ebooks.ebook_available', '=', 1)
             ->where(function ($query) use ($search_text) {
                 $query->where('ebook_title', 'LIKE', '%' . $search_text . '%')
                     ->orWhere('ebook_author', 'LIKE', '%' . $search_text . '%')
@@ -73,7 +74,9 @@ class LibraryLib
             ->get();
 
         $secondLoad = $this->ci->Repository_model::where(function ($query) use ($client_id) {
-            $query->where('client_id', '=', $client_id);
+            $query->where('client_id', '=', $client_id)
+                ->whereNotNull('repo_code')
+                ->whereNotNull('repo_file');
         })->where(function ($query) use ($search_text) {
             $query->where('repo_title', 'LIKE', '%' . $search_text . '%')
                 ->orWhere('repo_author', 'LIKE', '%' . $search_text . '%')
@@ -132,6 +135,7 @@ class LibraryLib
         $firstLoad = DB::table('t_client_ebook')
             ->leftjoin('t_ebooks', 't_client_ebook.ebook_id', '=', 't_ebooks.id')
             ->where('t_client_ebook.client_id', '=', $client_id)
+            ->where('t_ebooks.ebook_available', '=', 1)
             ->where(function ($query) use ($search_text) {
                 $query->where('ebook_title', 'LIKE', '%' . $search_text . '%')
                     ->orWhere('ebook_author', 'LIKE', '%' . $search_text . '%')
@@ -165,7 +169,9 @@ class LibraryLib
             ->get();
 
         $secondLoad = $this->ci->Repository_model::where(function ($query) use ($client_id) {
-            $query->where('client_id', '=', $client_id);
+            $query->where('client_id', '=', $client_id)
+                ->whereNotNull('repo_code')
+                ->whereNotNull('repo_file');
         })->where(function ($query) use ($search_text) {
             $query->where('repo_title', 'LIKE', '%' . $search_text . '%')
                 ->orWhere('repo_author', 'LIKE', '%' . $search_text . '%')
@@ -210,7 +216,7 @@ class LibraryLib
     {
         $model = new $this->ci->Viewebook_model();
         $model->fill($data);
-        if($model->save($data)){
+        if ($model->save($data)) {
             return true;
         };
         return false;

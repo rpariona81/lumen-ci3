@@ -91,7 +91,8 @@ class AdminLib
                     ->on('t_client_ebook.ebook_id', '=', 't_ebooks_views.ebook_id');
             })
             ->where(function ($query) use ($client_id) {
-                $query->where('t_ebooks_views.client_id', '=', $client_id);
+                $query->where('t_ebooks_views.client_id', '=', $client_id)
+                ->where('t_ebooks.ebook_available', '=', 1);
             })
             ->take(4)
             ->distinct('t_ebooks.id')
