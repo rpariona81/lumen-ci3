@@ -382,7 +382,7 @@ $config['sess_expiration'] = 7200;
 $config['sess_save_path'] = getenv('SESSION_PATH') ?? 'xi_sessions';
 $config['sess_match_ip'] = TRUE;
 $config['sess_time_to_update'] = 3600;
-$config['sess_regenerate_destroy'] = TRUE;
+$config['sess_regenerate_destroy'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
