@@ -187,6 +187,7 @@ class AdminLib
 
     public function getCatalogs()
     {
+
         $catalogs = array();
         $array_tags = array();
         $client_id = $this->ci->session->userdata('Client') ? $this->ci->Client_model->where('client_name', $this->ci->session->userdata('Client'))->first()->id : null;
@@ -203,7 +204,7 @@ class AdminLib
                     foreach ($client_ebook_tags as $tag)
                         array_push($array_tags, $tag);
                 }else{
-                    array_push($array_tags, $tag);
+                    array_push($array_tags, $tags->client_ebook_tags);
                 }
             }
         }
