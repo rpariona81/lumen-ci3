@@ -29,7 +29,7 @@ class RegisterLib
             $len_email = strlen($email);
             $host = $_SERVER['HTTP_HOST'];
             $subdomain_arr = explode('.', $host, 4); // Limit the split to 2 parts
-            $subdomain_name = $subdomain_arr[0] . '.' . $subdomain_arr[1];
+            $subdomain_name = $subdomain_arr[0] . '.' . $subdomain_arr[1]. '.' . $subdomain_arr[2];
             //echo $subdomain_name;
             //exit();
             if (isset($existingUser)) {
