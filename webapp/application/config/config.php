@@ -375,14 +375,14 @@ $config['encryption_key'] = getenv('APP_KEY') ?? 'df%@bsd6789f6er85SfSDaASF!!=';
 | except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
 |
 */
-$config['sess_driver'] = 'database';
+$config['sess_driver'] = getenv('SESSION_DRIVER') ?? 'files';
 $config['sess_cookie_name'] = 'xi_session';
 $config['sess_samesite'] = 'xaLax';
-$config['sess_expiration'] = 7200;
+$config['sess_expiration'] = getenv('SESSION_LIFETIME') ? (getenv('SESSION_LIFETIME') * 60) : 1800;
 $config['sess_save_path'] = getenv('SESSION_PATH') ?? 'xi_sessions';
 $config['sess_match_ip'] = TRUE;
-$config['sess_time_to_update'] = 3600;
-$config['sess_regenerate_destroy'] = FALSE;
+$config['sess_time_to_update'] = getenv('SESSION_TIME_UPDATE') ?? 300;
+$config['sess_regenerate_destroy'] = getenv('SESSION_REGENERATE_DESTROY') ?? FALSE;
 
 /*
 |--------------------------------------------------------------------------
