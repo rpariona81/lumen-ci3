@@ -518,9 +518,9 @@ class AdminController extends CI_Controller
                     'repo_editorial' => $this->input->post('repo_editorial', true),
                     'repo_pages' => $this->input->post('repo_pages', true) ? $this->input->post('repo_pages', true) : 9999
                 );
-                if($this->input->post('repo_year', true) != null){
+                if ($this->input->post('repo_year', true) != null) {
                     $data['repo_year'] = $this->input->post('repo_year', true);
-                }else{
+                } else {
                     $data['repo_year'] = 2020;
                 }
                 $checkFile = isset($checkFile) ?? false;
@@ -567,6 +567,108 @@ class AdminController extends CI_Controller
         } catch (Exception $e) {
             $this->session->set_flashdata('flashError', $e->getMessage());
             //exit();
+        }
+    }
+
+    public function viewPerfil()
+    {
+        try {
+            $client_id = $this->Client_model->where('client_name', $this->session->userdata('Client'))->first()->id;
+            //echo $client_id;
+            //exit();
+            if (isset($client_id)) {
+                $data['perfil'] = User_model::where('username', '=', $this->session->userdata('User'))->first();
+                $data['content'] = 'admin/adminPerfil';
+                $this->load->view('admin/templateAdmin', $data);
+            }
+        } catch (Exception $e) {
+            $this->session->set_flashdata('flashError', $e->getMessage());
+            //exit();
+        }
+    }
+
+    public function actualizaPerfil()
+    {
+        $this->form_validation->set_message('no_repetir_email', 'Existe otro registro con el mismo %s');
+
+        $registro = $this->input->post();
+        $this->form_validation->set_rules('email', 'Email', 'trim|valid_email');
+        $this->form_validation->set_rules('firstname', 'Nombres', 'required|min_length[2]');
+        $this->form_validation->set_rules('lastname', 'Apellidos', 'required|min_length[2]');
+        //si el proceso falla mostramos errores
+        if ($this->form_validation->run() == FALSE) {
+            //echo $registro['email'].' false';
+            $this->viewPerfil();
+            //redirect('/user/perfil');
+            //en otro caso procesamos los datos
+        } else {
+
+            $user_id = $this->session->userdata('Email') ? $this->User_model->where('email', $this->session->userdata('Email'))->first()->id : null;
+            date_default_timezone_set('America/Lima');
+
+            if (isset($user_id)) {
+                $check_user = $this->User_model::where('id', $user_id)->select('firstname', 'lastname', 'enabled')->get();
+                $data = array(
+                    'firstname' => $this->input->post('firstname', true),
+                    'lastname' => $this->input->post('lastname', true),
+                    //'email' => $this->input->post('email', true)
+                );
+                //echo "data: ".json_encode($check_user).'-----'.$check_user[0]['firstname'];
+                if ($check_user['0']['firstname'] != $data['firstname'] || $check_user[0]['lastname'] != $data['lastname']) {
+                    $model = $this->User_model::findOrFail($user_id);
+                    //echo $registro.' true';
+                    $model->fill($data);
+                    $model->save($data);
+                    // Display success message
+                    $this->session->set_flashdata('flashSuccess', 'Actualización exitosa de datos.');
+                    redirect('/admin/perfil');
+                } else {
+                    $this->session->set_flashdata('flashSuccess', 'No hay cambios.');
+                    $this->viewPerfil();
+                }
+            } else {
+                $this->session->set_flashdata('flashSuccess', 'No hay cambios.');
+                $this->viewPerfil();
+            }
+        }
+    }
+
+    public function cambiarClave()
+    {
+        $registro = $this->input->post();
+        $this->form_validation->set_rules('clave_act', 'Clave Actual', 'required');
+        $this->form_validation->set_rules('clave_new', 'Clave Nueva', 'required|matches[clave_rep]');
+        $this->form_validation->set_rules('clave_rep', 'Repita Nueva', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            //print_r($registro);
+            //exit();
+            $this->session->set_flashdata('flashError', 'Verifique las claves ingresadas.');
+            redirect('/admin/perfil');
+            //en otro caso procesamos los datos
+        } else {
+            $user_id = $this->session->userdata('Email') ? $this->User_model->where('email', $this->session->userdata('Email'))->first()->id : null;
+            date_default_timezone_set('America/Lima');
+
+            if (isset($user_id)) {
+                $actual = $this->input->post('clave_act');
+                $nuevo = $this->input->post('clave_new');
+                $usuario = User_model::find($user_id);
+                $password = $usuario['password'];
+                if (password_verify($actual, $password)) {
+                    $newpassword = password_hash($nuevo, PASSWORD_BCRYPT);
+                    $usuario->password = $newpassword;
+                    $usuario->remember_token = base64_encode($nuevo);
+                    $usuario->save();
+                    $this->session->set_flashdata('flashSuccess', 'Actualización exitosa de contraseña.');
+                    redirect('/admin/perfil', 'refresh');
+                } else {
+                    $this->session->set_flashdata('flashError', 'Verifique las claves ingresadas.');
+                    redirect('/admin/perfil', 'refresh');
+                }
+            } else {
+                $this->session->set_flashdata('error');
+                redirect('/login');
+            }
         }
     }
 }

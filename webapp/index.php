@@ -1,7 +1,7 @@
 <?php
 
 require_once 'bootstrap.php';
-
+ob_flush();
 /**
  * CodeIgniter
  *

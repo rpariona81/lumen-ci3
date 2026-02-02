@@ -113,3 +113,6 @@ $route['admin/repo/(:num)'] = 'admincontroller/verRepo/$1';
 $route['admin/updaterepo'] = 'admincontroller/actualizaRepo';
 
 $route['admin/info'] = 'admincontroller/viewClientInfo';
+$route['admin/perfil'] = 'admincontroller/viewPerfil';
+$route['admin/updateProfile'] = 'admincontroller/actualizaPerfil';
+$route['admin/updatePassword'] = 'admincontroller/cambiarClave';

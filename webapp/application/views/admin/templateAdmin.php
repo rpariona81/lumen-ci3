@@ -319,7 +319,7 @@
                                                         <?= $this->session->userdata('user_name') ?>
 
                                                     </div>
-                                                    <a href="#" class="fw-bold text-muted text-hover-primary fs-6">Mi
+                                                    <a href="<?= base_url('admin/perfil') ?>" class="fw-bold text-muted text-hover-primary fs-6">Mi
                                                         perfil</a>
                                                 </div>
                                                 <!--end::Username-->
